@@ -1,6 +1,7 @@
 # Base class for EVERYTHING.
 require(File.join(File.dirname(__FILE__), "logging.rb"))
 class Server
+	@plugins
 	@lib_path
 	@plugin_path
 	def initialize()	
@@ -13,6 +14,7 @@ class Server
 	def loadPlugins()
 		@log.log.info "Attempting to load plugins from #{@plugin_path}"
 		Dir.glob(@plugin_path) {|file| require file}
+		@plugins = {'ConfigPlugin' => Plugin::ConfigPlugin.new}	
 	end
 end
 

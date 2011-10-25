@@ -1,8 +1,8 @@
 require("../lib/plugin.rb")
-class ConfigurationPlugin < RubycraftPlugin
+class Plugin::ConfigPlugin < Plugin
 	attr_accessor :ip, :port, :maxplayers, :motd
 	def initialize(name, author, version, description, ip, port, maxplayers, motd)
-		super initialize(name, author, version, description)
+		super(name, author, version, description)
 		self.ip = ip
 		self.port = port
 		self.maxplayers = maxplayers
