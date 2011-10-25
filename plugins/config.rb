@@ -1,5 +1,5 @@
 require("../lib/plugin.rb")
-class Plugin::ConfigPlugin < Plugin
+class ConfigPlugin < Plugin
 	attr_accessor :ip, :port, :maxplayers, :motd
 	def initialize(name, author, version, description, ip, port, maxplayers, motd)
 		super(name, author, version, description)

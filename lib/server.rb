@@ -13,8 +13,8 @@ class Server
 		@plugin_path = File.dirname(__FILE__) + '/../plugins/*.rb'
 		@log = RubycraftLogger.new("RubyCraft")
 		@log.log.info("Initialized")
+		self.loadPlugins
 		self.startReactor
-		self.loadPlugins()
 	end
 	def startReactor
 		EventMachine::run {
@@ -24,10 +24,9 @@ class Server
 	end
 	def loadPlugins()
 		@log.log.info "Attempting to load plugins from #{@plugin_path}"
-		Dir[@plugin_path].each {|file| @log.log.debug("Plugin found in #{file}")
-			require file
-		}
-		@plugins = {'ConfigPlugin' => Plugin::ConfigPlugin.new}	
+		Dir.chdir("../") #Hacky.
+		Dir.glob(File.dirname(__FILE__) + '/plugins/*.rb') {|file| require file}
+		@plugins = {'ConfigPlugin' => ConfigPlugin.new}	
 	end
 end
 
