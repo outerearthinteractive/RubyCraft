@@ -1,6 +1,7 @@
 # Base class for EVERYTHING.
 require(File.join(File.dirname(__FILE__), "logging.rb"))
 require(File.join(File.dirname(__FILE__), "network.rb"))
+require(File.join(File.dirname(__FILE__), "../config.rb"))
 require 'rubygems'
 require 'eventmachine'
 
