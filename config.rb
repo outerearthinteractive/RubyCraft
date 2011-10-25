@@ -7,5 +7,7 @@ class ConfigPlugin < Plugin
 		self.port = port
 		self.maxplayers = maxplayers
 		self.motd = motd
+		self.maxversion = 9000 #cur. ver. = ~20
+		self.minversion = 0
 	end
 end
