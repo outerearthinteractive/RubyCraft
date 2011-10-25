@@ -5,6 +5,7 @@ require 'rubygems'
 require 'eventmachine'
 
 class Server
+	@plugins
 	@lib_path
 	@plugin_path
 	def initialize()	
@@ -24,6 +25,7 @@ class Server
 	def loadPlugins()
 		@log.log.info "Attempting to load plugins from #{@plugin_path}"
 		Dir.glob(@plugin_path) {|file| require file}
+		@plugins = {'ConfigPlugin' => Plugin::ConfigPlugin.new}	
 	end
 end
 
