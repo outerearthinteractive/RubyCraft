@@ -1,5 +1,6 @@
 require("./lib/plugin.rb")
-module Config
+
+module RCConfig
 	@ip = "127.0.0.1"
 	@port = 25565
 	@maxplayers = 20 # -1 for unlimted.
