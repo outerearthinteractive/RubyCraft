@@ -9,17 +9,19 @@ class Server
 	@plugins
 	@lib_path
 	@plugin_path
+	@configuration
 	def initialize()	
 		@lib_path = File.dirname(__FILE__) + '/../lib/*.rb'
 		@plugin_path = File.dirname(__FILE__) + '/../plugins/*.rb'
 		@log = RubycraftLogger.new("RubyCraft")
 		@log.log.info("Initialized")
+		@configuration = Configuration.new
 		self.loadPlugins
 		@connections = []
 	end
 	def start
-		EventMachine::start_server "127.0.0.1", 25565, RCNetworkServer
-		@log.log.info 'Server Listening, port 25565'
+		EventMachine::start_server @configuration.ip, @configuration.port, RCNetworkServer
+		@log.log.info "Server Listening, port #{@configuration.port}"
 	end
 	def stop
 		EventMachine.stop_server(@signature)
