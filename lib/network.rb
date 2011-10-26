@@ -1,4 +1,4 @@
-module RCNetworkServer
+module NetworkServer
 	def post_init
 	  puts "-- someone connected to the echo server!"
 	end
