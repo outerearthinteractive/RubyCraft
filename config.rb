@@ -1,22 +1,11 @@
 require("./lib/plugin.rb")
 
-module RCConfig
-	def ip
-		return "127.0.0.1"
-	end
-	def port
-		return 25565
-	end
-	def maxplayers
-		return 20
-	end
-	def motd
-		return "Welcome to the server!"
-	end
-	def maxversion
-		return 9000
-	end
-	def minversion
-		return 0
-	end 
+module Configuration
+	attr_accessor :ip, :port, :maxplayers, :motd, :maxversion, :minversion
+	self.ip = "127.0.0.1"
+	self.port = 25565
+	self.maxplayers = 20
+	self.motd = "Welcome to the server!"
+	self.minversion = 0
+	self.maxversion = 9001
 end
