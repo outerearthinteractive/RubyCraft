@@ -10,12 +10,13 @@ class Server
 	@lib_path
 	@plugin_path
 	@configuration
-	def initialize()	
+	def initialize
 		@lib_path = File.dirname(__FILE__) + '/../lib/*.rb'
 		@plugin_path = File.dirname(__FILE__) + '/../plugins/*.rb'
 		@log = RubycraftLogger.new("RubyCraft")
 		@log.log.info("Initialized")
 		@configuration = Configuration.new
+		@log.log.error("ERROR: Configuration is broken. Halting.") and exit 1 unless self.verifyConfiguration @configuration
 		self.loadPlugins
 		@connections = []
 	end
@@ -26,11 +27,19 @@ class Server
 	def stop
 		EventMachine.stop_server(@signature)
 	end
-	def loadPlugins()
+	def loadPlugins
 		@log.log.info "Attempting to load plugins from #{@plugin_path}"
 		Dir.chdir("../") #Hacky.
 		Dir.glob(File.dirname(__FILE__) + '/plugins/*.rb') {|file| require file}
 		#@plugins = {'ConfigPlugin' => ConfigPlugin.new}	
+	end
+	def verifyConfiguration c
+		#Todo: Add better verification. This will do for now.
+		if c.ip and c.port then
+			return true
+		else
+			return false
+		end
 	end
 end
 
