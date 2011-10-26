@@ -1,8 +1,7 @@
 require 'eventmachine'
 class NetworkServer < EventMachine::Connection
 	@log
-	def initialize log, *args
-		super
+	def initialize log
 		@log = log	
 	end
 	def post_init
