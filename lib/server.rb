@@ -21,7 +21,7 @@ class Server
 		@connections = []
 	end
 	def start
-		EventMachine::start_server @configuration.ip, @configuration.port, NetworkServer
+		EventMachine::start_server @configuration.ip, @configuration.port, NetworkServer.new(@log)
 		@log.log.info "Server Listening, port #{@configuration.port}"
 	end
 	def stop
