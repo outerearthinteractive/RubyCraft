@@ -1,21 +1,16 @@
 require 'eventmachine'
+
 class Connection < EventMachine::Connection
+	attr_accessor :server, :log
+	@server
 	@log
-	def initialize log server
-		@log = log
-		@server = server
+	def initialize
 	end
 	def post_init
 	  	@log.info "Client connected!"
 	end
 	def receive_data data
-		
-		if data =~ /quit/i then
-			send_data ">>> goodbye"
-			close_connection true
-		else
-	 		send_data ">>> you sent: #{data}"
-		end
+		@server.protocol.read_packet self, data
 	end
 	def unbind
 		@log.info "Client disconnected."

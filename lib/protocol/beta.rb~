@@ -67,7 +67,7 @@ class BetaProtocol
 		:server_kick			=> 255 
 	}
 			
-	def initialize log, server
+	def initialize log server
 		@log = log
 		@server = server
 	end
