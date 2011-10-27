@@ -5,10 +5,14 @@ class Configuration
 	
 	def initialize()
 		#All the variables & there values should be set here.
-		self.ip = "127.0.0.1"
+		#Port it should run on. This is the default for Minecraft BETA/SMP.
 		self.port = 25565
+		# Number of people that can be on the server.
 		self.maxplayers = 20
+		#Message of the day! Whoo Hoo!
 		self.motd = "Welcome to the server!"
+		
+		#This may not be the most effective way to limit protocol versions (Especially w/ multiple protocols).
 		self.minversion = 0
 		self.maxversion = 9001
 	end
