@@ -15,12 +15,15 @@ class Server
 		@lib_path = File.dirname(__FILE__) + '/../lib/*.rb'
 		@plugin_path = File.dirname(__FILE__) + '/../plugins/*.rb'
 		@log = RubycraftLogger.new("RubyCraft")
-		@log.log.info("Initialized")
+		@log.info("Initialized")
 		@configuration = Configuration.new
 		@log.log.error("ERROR: Configuration is broken. Halting.") and exit 1 unless self.verifyConfiguration @configuration
 		self.loadPlugins
 		@connections = []
-		@protocol = Protocol.new @log, @server
+		@protocol = Protocol.new @log, self
+	end
+	def config
+		return @configuration
 	end
 	def start
 		@server = EventMachine::start_server '0.0.0.0', @configuration.port, Connection do |con|

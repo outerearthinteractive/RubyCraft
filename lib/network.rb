@@ -1,4 +1,5 @@
 require 'eventmachine'
+require(File.join(File.dirname(__FILE__), "logging.rb"))
 
 class Connection < EventMachine::Connection
 	attr_accessor :server, :log
@@ -7,7 +8,8 @@ class Connection < EventMachine::Connection
 	def initialize
 	end
 	def post_init
-	  	@log.info "Client connected!"
+		#@log = @server.log
+	  	#@log.info "Client connected!"
 	end
 	def receive_data data
 		@server.protocol.read_packet self, data

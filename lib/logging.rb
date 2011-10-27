@@ -14,15 +14,15 @@ class RubycraftLogger
 		log.info("Logger initialized")
 	end
 	def debug msg
-		log.debug msg
+		self.log.debug msg
 	end
 	def info msg
-		log.info msg
+		self.log.info msg
 	end
 	def warn msg
-		log.warn msg
+		self.log.warn msg
 	end
 	def error msg
-		log.error msg
+		self.log.error msg
 	end
 end
