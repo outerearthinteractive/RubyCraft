@@ -12,5 +12,16 @@ class RubycraftLogger
 			"[#{self.tag}] #{datetime}: #{msg}\n"
 		}
 		log.info("Logger initialized")
+	def debug msg
+		log.debug msg
+	end
+	def info msg
+		log.info msg
+	end
+	def warn msg
+		log.warn msg
+	end
+	def error msg
+		log.error msg
 	end
 end
