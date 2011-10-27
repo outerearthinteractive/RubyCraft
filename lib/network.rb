@@ -1,8 +1,9 @@
 require 'eventmachine'
-class NetworkServer < EventMachine::Connection
+class Connection < EventMachine::Connection
 	@log
-	def initialize log
-		@log = log	
+	def initialize log server
+		@log = log
+		@server = server
 	end
 	def post_init
 	  	@log.info "Client connected!"
