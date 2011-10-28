@@ -1,4 +1,5 @@
 class BetaProtocol
+	def init_packets
 	@packets = {
 		:login_request 			=> 1,
 		:handshake 				=> 2,
@@ -66,12 +67,33 @@ class BetaProtocol
 		:server_list_ping		=> 254,
 		:server_kick			=> 255 
 	}
+	end
 			
 	def initialize log, server
 		@log = log
 		@server = server
+		@config = server.config
+		init_packets()
+		log.info("BetaProtocol Enabled!")
+		log.info @packets[:server_list_ping]
 	end
 	def read_packet connection, packet
-	
+		packet_id = packet[0,1].unpack("C")[0]
+		puts "Packet Id: "+packet_id.to_s
+		#puts "Received Packet: "+@packets.key(packet_id).to_s
+		if packet_id==@packets[:server_list_ping]
+			server_list_ping connection, packet
+		end
+	end
+	def server_list_ping connection, packet
+		@log.info "Got ping connection"
+		#Always returns 0 players online.
+		#delimiter = Iconv.iconv("utf-8", "utf-16", '')
+		payload = [@packets[:server_kick]].pack("C")+@config.name+'§'+0+'§'+@config.name
+		@log.info "Payload"+payload
+		send_packet connection, payload
+	end
+	def send_packet connection, payload
+		connection.send_packet packet
 	end
 end
