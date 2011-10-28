@@ -89,8 +89,9 @@ class BetaProtocol
 		@log.info "Got ping connection"
 		#Always returns 0 players online.
 		#delimiter = Iconv.iconv("utf-8", "utf-16", '')
-		payload = [@packets[:server_kick]].pack("C")+@config.name+'§'+0+'§'+@config.name
-		@log.info "Payload"+payload
+		payload = [@packets[:server_kick]].pack("C") + @config.name + "\xC2\xA7" + 0 + "\xC2\xA7" + @config.name
+
+		@log.info "Payload" + payload
 		send_packet connection, payload
 	end
 	def send_packet connection, payload
