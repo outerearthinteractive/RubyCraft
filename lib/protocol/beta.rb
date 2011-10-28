@@ -1,3 +1,5 @@
+require 'iconv'
+
 class BetaProtocol
 	def init_packets
 	@packets = {
@@ -87,14 +89,16 @@ class BetaProtocol
 	end
 	def server_list_ping connection, packet
 		@log.info "Got ping connection"
-		#Always returns 0 players online.
-		#delimiter = Iconv.iconv("utf-8", "utf-16", '')
-		payload = [@packets[:server_kick]].pack("C") + @config.name + "\xC2\xA7" + 0 + "\xC2\xA7" + @config.name
-
-		@log.info "Payload" + payload
-		send_packet connection, payload
+		#Always returns 0 players online. §"\xC2\xA7"
+		#
+		message = @config.name.encode("US-ASCII") + "\xC2\xA7" + 0.to_s.encode("US-ASCII") + "\xC2\xA7" + @config.name.encode("US-ASCII")
+		#message = message.encode("UTF-16")
+		@log.info message.size
+		payload =  [@packets[:server_kick],message.size].pack("CC") +message
+		@log.info "Payload: " + payload
+		connection.send_data payload
 	end
-	def send_packet connection, payload
-		connection.send_packet packet
+	
+	def send_kick connection
 	end
 end
