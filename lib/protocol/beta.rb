@@ -1,5 +1,5 @@
-require 'iconv'
-
+Encoding.default_external = Encoding::UTF_16
+Encoding.default_internal = Encoding::UTF_16
 class BetaProtocol
 	def init_packets
 	@packets = {
@@ -91,7 +91,7 @@ class BetaProtocol
 		@log.info "Got ping connection"
 		#Always returns 0 players online. §"\xC2\xA7"
 		#
-		message = @config.name.encode("US-ASCII") + "\xC2\xA7" + 0.to_s.encode("US-ASCII") + "\xC2\xA7" + @config.name.encode("US-ASCII")
+		message = @config.name.encode("UTF-16") + "\xC2\xA7" + 0.to_s.encode("UTF-16") + "\xC2\xA7" + @config.name.encode("UTF-16")
 		#message = message.encode("UTF-16")
 		@log.info message.size
 		payload =  [@packets[:server_kick],message.size].pack("CC") +message
