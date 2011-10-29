@@ -1,6 +1,7 @@
 
 class BetaProtocol
 	def init_packets
+	@delim = "\xC2\xA7".force_encoding("UTF-16")
 	@packets = {
 		:login_request 			=> 1,
 		:handshake 				=> 2,
@@ -90,10 +91,10 @@ class BetaProtocol
 		@log.info "Got ping connection"
 		#Always returns 0 players online. §"\xC2\xA7"
 		#
-		message = @config.name.force_encoding("UTF-16") + "\xC2\xA7" + 0.to_s.force_encoding("UTF-16") + "\xC2\xA7" + @config.name.force_encoding("UTF-16")
+		message = @config.name.force_encoding("UTF-16") + @delim + 0.to_s.force_encoding("UTF-16") + @delim + @config.name.force_encoding("UTF-16")
 		#message = message.encode("UTF-16")
 		@log.info message.size
-		payload =  [@packets[:server_kick],message.size].pack("CC") +message
+		payload =  [@packets[:server_kick],message.size].pack("CC") + message
 		@log.info "Payload: " + payload
 		connection.send_data payload
 	end
