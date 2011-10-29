@@ -4,7 +4,7 @@ class Block
 @block_z
 @block_type
 @block_data
-	def initialize x y z type
+	def initialize x, y, z, type
 		@block_x = x
 		@block_y = y
 		@block_z = z

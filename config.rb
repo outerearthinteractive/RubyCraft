@@ -24,7 +24,6 @@ class Configuration
 #Example: @protocols = [BetaProtocol]
 	@protocols = [BetaProtocol]
 
-
 end
 	def load_classes
 		Dir.glob(File.join(File.dirname(__FILE__), './plugins/*.rb')) {|file| require file}
