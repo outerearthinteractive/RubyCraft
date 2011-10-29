@@ -91,10 +91,10 @@ class BetaProtocol
 		@log.info "Got ping connection"
 		#Always returns 0 players online. §"\xC2\xA7"
 		#
-		message = @config.name.force_encoding("UTF-16") + @delim + 0.to_s.force_encoding("UTF-16") + @delim + @config.name.force_encoding("UTF-16")
+		message = @config.name.force_encoding("UTF-16") + @delim + 0.to_s.force_encoding("UTF-16") + @delim + 20.to_s.force_encoding("UTF-16")
 		#message = message.encode("UTF-16")
 		@log.info message.size
-		payload =  [@packets[:server_kick],message.size].pack("CC") + message
+		payload =  [@packets[:server_kick],message.size].pack("CC") + message.unpack("C*").pack("C*")
 		@log.info "Payload: " + payload
 		connection.send_data payload
 	end
