@@ -9,8 +9,10 @@
 # * _maxplayers_ = maximum amount of players allowed on the server at a time.
 # * _description_ = description that will be shown in the server list on supporting clients.
 # * _motd_ = message displayed to clients upon connection. empty strings will be treated as no message at all.
-# * _minversion_ = not used yet, can be anything.
-# * _maxversion_ = not used yet, can be anything.
+# * _minversion_ = not used yet, can be anything. May never be used (most likely).
+# * _maxversion_ = not used yet, can be anything. May never be used (most likely).
+# * _protocols_ = an array of protocol handlers. Currently the only one is: BetaProtocol
+# * _worlds_ = an array of WorldConfig elements. WorldConfig.new( <String, World Name>, [<Terrain Generators>])
 # == Examples
 #
 # class Configuration
@@ -22,6 +24,8 @@
 #   @minversion = 0
 #   @maxversion = 10000
 #   @protocols = [BetaProtocol]
+#	@worlds = []
+#	@worlds += WorldConfig.new( "world1", [FlatGenerator] )
 
 class Configuration
   attr_accessor :interface, :port, :maxplayers, :description, :motd, :minversion, :maxversion, :protocols
@@ -34,6 +38,8 @@ class Configuration
     @minversion = 0
     @maxversion = 9001
     @protocols = [BetaProtocol]
+    @worlds = []
   end
-
 end
+
+require(File.join(File.dirname(__FILE__), "lib/config_utils.rb"))
