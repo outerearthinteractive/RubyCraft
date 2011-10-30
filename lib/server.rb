@@ -1,6 +1,7 @@
 # Base class for EVERYTHING.
 require(File.join(File.dirname(__FILE__), "logging.rb"))
 require(File.join(File.dirname(__FILE__), "network.rb"))
+require(File.join(File.dirname(__FILE__), "command.rb"))
 require(File.join(File.dirname(__FILE__), "../config.rb"))
 require 'rubygems'
 require 'eventmachine'
@@ -17,7 +18,7 @@ class Server
 		@log = RubycraftLogger.new("RubyCraft")
 		@log.info("Initialized")
 		@configuration = Configuration.new
-		@log.log.error("ERROR: Configuration is broken. Halting.") and exit 1 unless self.verifyConfiguration @configuration
+		@log.log.error("ERROR: Configuration is broken. Halting.") and stop unless self.verifyConfiguration @configuration
 		self.loadPlugins
 		@connections = []
 		@protocol = Protocol.new @log, self
@@ -30,16 +31,20 @@ class Server
 			con.server = self
 			con.log = @log
 		end
+		@console = EventMachine::open_keyboard(CommandHandler) do |con|
+			con.server = self
+		end
 		@log.log.info "Server Listening, port #{@configuration.port}"
 	end
 	def stop
-		@log.log.info
-		EventMachine.stop_server(@server)
+		@log.info "Stopping server..."
+		EventMachine::stop_server(@server)
+		exit 1
 	end
 	def loadPlugins
 		@log.log.info "Attempting to load plugins from #{@plugin_path}"
-		Dir.chdir("../") #Hacky.
-		Dir.glob(File.dirname(__FILE__) + '/plugins/*.rb') {|file| require file}
+		#Dir.chdir("../") #Hacky.
+		Dir.glob(@plugin_path) {|file| require file}
 		#@plugins = {'ConfigPlugin' => ConfigPlugin.new}
 	end
 	def verifyConfiguration c

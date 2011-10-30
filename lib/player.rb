@@ -1,5 +1,11 @@
 class Player
-	def initialize
+@player
+@name
+@inventory
+@x
+@y
+@z
+	def initialize player
 		
 	end
 end
