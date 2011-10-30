@@ -6,7 +6,7 @@ class Chunk
 @chunk_x
 @chunk_y
 @chunk_blocks
-	def initialize server, world
+	def initialize server, world, x, z
 		@server = server
 		@world = world
 		@chunk_blocks = []

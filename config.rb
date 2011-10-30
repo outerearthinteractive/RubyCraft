@@ -18,7 +18,7 @@
 # * _minversion_ = not used yet, can be anything. May never be used (most likely).
 # * _maxversion_ = not used yet, can be anything. May never be used (most likely).
 # * _protocols_ = an array of protocol handlers. Currently the only one is: BetaProtocol
-# * _worlds_ = an array of WorldConfig elements. WorldConfig.new( <String, World Name>, [<Terrain Generators>])
+# * _worlds_ = an array of WorldConfig elements. WorldConfig.new( <String, World Name>, <seed>, [<Terrain Generators>])
 # == Examples
 #
 # 
@@ -32,9 +32,9 @@
 #   @protocols = [BetaProtocol]
 #   @authenticate = true
 #	  @worlds = []
-#	  @worlds.pop WorldConfig.new( "world1", [FlatGenerator] )
+#	  @worlds.pop WorldConfig.new( "world1", 15, [FlatGenerator] )
 class Configuration
-  attr_accessor :interface, :port, :maxplayers, :description, :motd, :minversion, :maxversion, :protocols, :authenticate
+  attr_accessor :interface, :port, :maxplayers, :description, :motd, :minversion, :maxversion, :protocols, :authenticate, :worlds
   def initialize
     @interface = "0.0.0.0"
     @port = 25565

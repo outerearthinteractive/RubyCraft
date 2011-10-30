@@ -1,13 +1,12 @@
 Dir.glob(File.dirname(__FILE__) + '/protocol/*.rb') {|file| require file}
 
-class ProtocolHandeler
-	def initialize log, server
-		@log = log
+class ProtocolHandler
+	def initialize server
 		@server = server
 		@config = server.config
 		@protocols = []
 		@config.protocols.each do |proto|
-			@protocols += [(proto.new @log, @server)]
+			@protocols += [(proto.new @server)]
 		end
 	end
 	def read_packet connection, packet, player

@@ -2,6 +2,7 @@
 require(File.join(File.dirname(__FILE__), "logging.rb"))
 require(File.join(File.dirname(__FILE__), "network.rb"))
 require(File.join(File.dirname(__FILE__), "command.rb"))
+require(File.join(File.dirname(__FILE__), "terrain_generators.rb"))
 require(File.join(File.dirname(__FILE__), "../config.rb"))
 require 'rubygems'
 require 'eventmachine'
@@ -18,7 +19,7 @@ class Server
 		@log.info("Initialized")
 		@configuration = Configuration.new
 		@connections = []
-		@protocol = ProtocolHandeler.new @log, self
+		@protocol = ProtocolHandler.new self
 		@players = []
 	end
 	def config
@@ -28,7 +29,6 @@ class Server
 		@server = EventMachine::start_server @configuration.interface, @configuration.port, Connection do |con|
 			con.server = self
 			con.log = @log
-			con.player = @players.push(Player.new)
 		end
 		@console = EventMachine::open_keyboard(CommandHandler) do |con|
 			con.server = self

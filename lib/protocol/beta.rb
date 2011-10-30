@@ -74,13 +74,13 @@ class BetaProtocol
 	}
 	end
 			
-	def initialize log, server
-		@log = log
+	def initialize server
+		@log = server.log
 		@server = server
 		@config = server.config
 		init_packets()
-		log.info("BetaProtocol Enabled!")
-		log.info @packets[:server_list_ping]
+		@log.info("BetaProtocol Enabled!")
+		@log.info @packets[:server_list_ping]
 	end
 	def read_packet connection, packet, player
 	  @player = player
