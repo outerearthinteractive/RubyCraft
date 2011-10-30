@@ -1,32 +1,39 @@
+# This class provides configuration variables for the entire server. At a later date, it will be superseded
+# with a more dynamic configuration-backend loading scheme.
+# Author::    Tanner Danzey (mailto:arkaniad@gmail.com)
+# Author::    Tristan Rice (mailto:rice@outerearth.net)
+# License::   Distributes under the same terms as Ruby
+# == Variables
+# * _interface_ = the interface that the server will listen to. 0.0.0.0 listens on every interface, which is default.
+# * _port_ = port that the server will listen on. Default should be 25565, which is standard.
+# * _maxplayers_ = maximum amount of players allowed on the server at a time.
+# * _description_ = description that will be shown in the server list on supporting clients.
+# * _motd_ = message displayed to clients upon connection. empty strings will be treated as no message at all.
+# * _minversion_ = not used yet, can be anything.
+# * _maxversion_ = not used yet, can be anything.
+# == Examples
+#
+# class Configuration
+#   @interface = "0.0.0.0"
+#   @port = 25565
+#   @maxplayers = 24
+#   @description = "Tanner's Server O' fun!"
+#   @motd = "Welcome to Tanner's Server O' fun! Enjoy yourself!"
+#   @minversion = 0
+#   @maxversion = 10000
+#   @protocols = [BetaProtocol]
+
 class Configuration
+  attr_accessor :interface, :port, :maxplayers, :description, :motd, :minversion, :maxversion, :protocols
+  def initialize
+    @interface = "0.0.0.0"
+    @port = 25565
+    @maxplayers = 20
+    @description = "RubyCraft Test Server!"
+    @motd = "Welcome to the server!"
+    @minversion = 0
+    @maxversion = 9001
+    @protocols = [BetaProtocol]
+  end
 
-#This is a list of vars that can be accessed outside the class directly.
-#Pretty much everything in this file should be listed here.
-	attr_accessor :port, :maxplayers, :motd, :maxversion, :minversion, :name, :protocols
-
-	def initialize()
-
-#All the variables & there values should be set here.
-#Port it should run on. This is the default for Minecraft BETA/SMP.
-	@port = 25565
-# Number of people that can be on the server.
-	@maxplayers = 20
-#Name of the server displayed on the minecraft server list!
-	@name = "RubyCraft Test Server!"
-#Message of the day! Whoo Hoo!
-	@motd = "Welcome to the server!"
-
-#This may not be the most effective way to limit protocol versions (Especially w/ multiple protocols).
-	@minversion = 0
-	@maxversion = 9001
-
-#These are the protocol versions that should be used.
-#Example: @protocols = [BetaProtocol]
-	@protocols = [BetaProtocol]
-
-end
-	def load_classes
-		Dir.glob(File.join(File.dirname(__FILE__), './plugins/*.rb')) {|file| require file}
-		Dir.glob(File.join(File.dirname(__FILE__), './lib/protocol/*.rb')) {|file| require file}
-	end
 end

@@ -1,7 +1,6 @@
-This is a minecraft server in Ruby!
+This is a minecraft server in Ruby. That is all you need to know.
+Server settings lie in config.rb.
 
-Required:
-ruby
-eventmachine (For most: gem install eventmachine)
+Required gems:
 
-Now on GitHub! Hello!
+eventmachine 
