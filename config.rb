@@ -13,6 +13,7 @@
 # * _motd_ = message displayed to clients upon connection. empty strings will be treated as no message at all.
 # * _minversion_ = not used yet, can be anything.
 # * _maxversion_ = not used yet, can be anything.
+# * _authenticate_ = whether the server should authenticate clients with minecraft.net.
 # == Example
 #
 # 
@@ -24,9 +25,10 @@
 #   @minversion = 0
 #   @maxversion = 10000
 #   @protocols = [BetaProtocol]
+#   @authenticate = true
 
 class Configuration
-  attr_accessor :interface, :port, :maxplayers, :description, :motd, :minversion, :maxversion, :protocols
+  attr_accessor :interface, :port, :maxplayers, :description, :motd, :minversion, :maxversion, :protocols, :authenticate
   def initialize
     @interface = "0.0.0.0"
     @port = 25565
@@ -36,6 +38,7 @@ class Configuration
     @minversion = 0
     @maxversion = 9001
     @protocols = [BetaProtocol]
+    @authenticate = true
   end
 
 end

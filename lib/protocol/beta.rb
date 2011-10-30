@@ -1,8 +1,11 @@
 
 class BetaProtocol
 	def init_packets
+	@player
+	@last_keep_alive = 0
 	@delim = "\xA7".force_encoding("UTF-16")
 	@packets = {
+	  :keep_alive        => 0,
 		:login_request 			=> 1,
 		:handshake 				=> 2,
 		:chat_message 			=> 3,
@@ -79,18 +82,39 @@ class BetaProtocol
 		log.info("BetaProtocol Enabled!")
 		log.info @packets[:server_list_ping]
 	end
-	def read_packet connection, packet
+	def read_packet connection, packet, player
+	  @player = player
 		packet_id = packet[0,1].unpack("C")[0]
 		puts "Packet Id: "+packet_id.to_s
 		#puts "Received Packet: "+@packets.key(packet_id).to_s
-		if packet_id==@packets[:server_list_ping]
+		case packet_id
+		when @packets[:server_list_ping]
 			server_list_ping connection, packet
+		when @packets[:login_request]
+		  login_request connection, packet
+		when @packets[:handshake]
+		  handshake connection, packet
 		end
+    
+	end
+	def handshake connection, packet
+	  @player.name = packet.chomp
+	  puts @player.inspect
+	  puts packet
+	end
+	def login_request connection, packet
+	  @log.debug packet
+	end
+	def keep_alive connection
+	  @last_keep_alive = rand(32767..65536)
+	  payload = [@packet[:keep_alive],@last_keep_alive]
+	end
+	def check_keep_alive connection, packet
 	end
 	def server_list_ping connection, packet
 		@log.debug "Got ping connection"
 		#Always returns 0 players online. 
-		message = utfize(@config.name) + @delim + utfize(0.to_s) + @delim + utfize(20.to_s)
+		message = utfize(@config.description) + @delim + utfize(0.to_s) + @delim + utfize(20.to_s)
 		@log.debug "Message size: #{message.size}"
 		payload =  [@packets[:server_kick],message.size]
 		message_bytes = []

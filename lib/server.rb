@@ -12,13 +12,14 @@ class Server
 	@lib_path
 	@plugin_path
 	@configuration
+	@players
 	def initialize
 		@log = RubycraftLogger.new("RubyCraft")
 		@log.info("Initialized")
 		@configuration = Configuration.new
-		@log.log.error("ERROR: Configuration is broken. Halting.") and stop unless self.verifyConfiguration @configuration
 		@connections = []
 		@protocol = Protocol.new @log, self
+		@players = []
 	end
 	def config
 		return @configuration
@@ -27,6 +28,7 @@ class Server
 		@server = EventMachine::start_server @configuration.interface, @configuration.port, Connection do |con|
 			con.server = self
 			con.log = @log
+			con.player = @players.push(Player.new)
 		end
 		@console = EventMachine::open_keyboard(CommandHandler) do |con|
 			con.server = self
@@ -37,13 +39,5 @@ class Server
 		@log.info "Stopping server..."
 		EventMachine::stop_server(@server)
 		exit 1
-	end
-	def verifyConfiguration c
-	  #TODO: Verify more things.
-		if c.port is_a? Integer and c.interface is_a? String
-			return true
-		else
-			return false
-		end
 	end
 end
