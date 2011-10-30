@@ -90,9 +90,9 @@ class BetaProtocol
 	def server_list_ping connection, packet
 		@log.debug "Got ping connection"
 		#Always returns 0 players online. 
-		message = @config.name.force_encoding("UTF-16") + @delim + 0.to_s.force_encoding("UTF-16") + @delim + 20.to_s.force_encoding("UTF-16")
+		message = utfize(@config.name) + @delim + utfize(0.to_s) + @delim + utfize(20.to_s)
 		@log.debug "Message size: #{message.size}"
-		payload =  [@packets[:server_kick],message.size]#.pack("CC") + message.unpack("C*").pack("C*")
+		payload =  [@packets[:server_kick],message.size]
 		message_bytes = []
 		message.each_byte do 
 			|b| message_bytes.push(b)
@@ -105,6 +105,12 @@ class BetaProtocol
 	end
 	
 	def send_kick connection
+	end
+	def utfize string
+		@log.debug "UTF-16-izing string: #{string}"
+		
+		return string.force_encoding("UTF-16")
+		
 	end
 	def bisect array
 		@log.debug "Bisecting Array"
