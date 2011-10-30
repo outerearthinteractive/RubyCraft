@@ -1,8 +1,10 @@
 # This class provides configuration variables for the entire server. At a later date, it will be superseded
 # with a more dynamic configuration-backend loading scheme.
-# Author::    Tanner Danzey (mailto:arkaniad@gmail.com)
-# Author::    Tristan Rice (mailto:rice@outerearth.net)
-# License::   Distributes under the same terms as Ruby
+# == Authors    
+# * Tanner Danzey (mailto:arkaniad@gmail.com) 
+# * Tristan Rice (mailto:rice@outerearth.net)  
+# == License   
+# Distributes under the same terms as Ruby
 # == Variables
 # * _interface_ = the interface that the server will listen to. 0.0.0.0 listens on every interface, which is default.
 # * _port_ = port that the server will listen on. Default should be 25565, which is standard.
@@ -11,9 +13,9 @@
 # * _motd_ = message displayed to clients upon connection. empty strings will be treated as no message at all.
 # * _minversion_ = not used yet, can be anything.
 # * _maxversion_ = not used yet, can be anything.
-# == Examples
+# == Example
 #
-# class Configuration
+# 
 #   @interface = "0.0.0.0"
 #   @port = 25565
 #   @maxplayers = 24
