@@ -98,29 +98,22 @@ class BetaProtocol
 			|b| message_bytes.push(b)
 		end
 		payload.concat(message_bytes)
-		@log.debug"Payload: #{payload.to_s}"
-		@log.debug"Payload Packed: #{payload.pack("C*")}"
-		@log.debug "UTF-16izing the payload..."
 		connection.send_data bisect(payload).pack("C*")
 	end
 	
 	def send_kick connection
+	  #TODO: Finish Kick Stub
 	end
 	def utfize string
-		@log.debug "UTF-16-izing string: #{string}"
-		
 		return string.force_encoding("UTF-16")
-		
 	end
 	def bisect array
-		@log.debug "Bisecting Array"
 		buffer = []
 		array.each { |item|
 			buffer.push item
 			buffer.push 0
 		}
 		buffer.pop
-		@log.debug buffer.inspect
 		return buffer
 	end
 end
