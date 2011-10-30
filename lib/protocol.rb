@@ -1,6 +1,6 @@
-require(File.join(File.dirname(__FILE__), "./protocol/beta.rb"))
+Dir.glob(File.dirname(__FILE__) + '/protocol/*.rb') {|file| require file}
 
-class Protocol
+class ProtocolHandeler
 	def initialize log, server
 		@log = log
 		@server = server

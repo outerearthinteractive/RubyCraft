@@ -18,7 +18,7 @@ class Server
 		@log.info("Initialized")
 		@configuration = Configuration.new
 		@connections = []
-		@protocol = Protocol.new @log, self
+		@protocol = ProtocolHandeler.new @log, self
 		@players = []
 	end
 	def config
