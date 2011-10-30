@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>Class: BetaProtocol</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/protocol/beta.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-new">::new</a>
+    
+    <li><a href="#method-i-bisect">#bisect</a>
+    
+    <li><a href="#method-i-check_keep_alive">#check_keep_alive</a>
+    
+    <li><a href="#method-i-handshake">#handshake</a>
+    
+    <li><a href="#method-i-init_packets">#init_packets</a>
+    
+    <li><a href="#method-i-keep_alive">#keep_alive</a>
+    
+    <li><a href="#method-i-login_request">#login_request</a>
+    
+    <li><a href="#method-i-read_packet">#read_packet</a>
+    
+    <li><a href="#method-i-send_kick">#send_kick</a>
+    
+    <li><a href="#method-i-server_list_ping">#server_list_ping</a>
+    
+    <li><a href="#method-i-utfize">#utfize</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./README.html">README</a>
+  
+    <li class="file"><a href="./TODO.html">TODO</a>
+  
+    <li class="file"><a href="./log_txt.html">log</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./BetaProtocol.html">BetaProtocol</a>
+  
+    <li><a href="./Block.html">Block</a>
+  
+    <li><a href="./Chunk.html">Chunk</a>
+  
+    <li><a href="./CommandHandler.html">CommandHandler</a>
+  
+    <li><a href="./Configuration.html">Configuration</a>
+  
+    <li><a href="./Connection.html">Connection</a>
+  
+    <li><a href="./MultiIO.html">MultiIO</a>
+  
+    <li><a href="./Player.html">Player</a>
+  
+    <li><a href="./Plugin.html">Plugin</a>
+  
+    <li><a href="./Protocol.html">Protocol</a>
+  
+    <li><a href="./RubycraftLogger.html">RubycraftLogger</a>
+  
+    <li><a href="./Server.html">Server</a>
+  
+    <li><a href="./World.html">World</a>
+  
+    <li><a href="./WorldConfig.html">WorldConfig</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class BetaProtocol</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(log, server)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">log</span>, <span class="ruby-identifier">server</span>
+        <span class="ruby-ivar">@log</span> = <span class="ruby-identifier">log</span>
+        <span class="ruby-ivar">@server</span> = <span class="ruby-identifier">server</span>
+        <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">server</span>.<span class="ruby-identifier">config</span>
+        <span class="ruby-identifier">init_packets</span>()
+        <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span>(<span class="ruby-string">&quot;BetaProtocol Enabled!&quot;</span>)
+        <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span> <span class="ruby-ivar">@packets</span>[<span class="ruby-value">:server_list_ping</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-bisect" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">bisect</span><span
+            class="method-args">(array)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="bisect-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 134</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">bisect</span> <span class="ruby-identifier">array</span>
+        <span class="ruby-identifier">buffer</span> = []
+        <span class="ruby-identifier">array</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">item</span>
+                <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">push</span> <span class="ruby-value">0</span>
+        }
+        <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">pop</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">buffer</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- bisect-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- bisect-method -->
+
+    
+      <div id="method-i-check_keep_alive" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_keep_alive</span><span
+            class="method-args">(connection, packet)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="check_keep_alive-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_keep_alive</span> <span class="ruby-identifier">connection</span>, <span class="ruby-identifier">packet</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- check_keep_alive-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_keep_alive-method -->
+
+    
+      <div id="method-i-handshake" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handshake</span><span
+            class="method-args">(connection, packet)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="handshake-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handshake</span> <span class="ruby-identifier">connection</span>, <span class="ruby-identifier">packet</span>
+  <span class="ruby-ivar">@player</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">packet</span>.<span class="ruby-identifier">chomp</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@player</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">packet</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handshake-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handshake-method -->
+
+    
+      <div id="method-i-init_packets" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">init_packets</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="init_packets-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">init_packets</span>
+<span class="ruby-ivar">@player</span>
+<span class="ruby-ivar">@last_keep_alive</span> = <span class="ruby-value">0</span>
+<span class="ruby-ivar">@delim</span> = <span class="ruby-string">&quot;\xA7&quot;</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-string">&quot;UTF-16&quot;</span>)
+<span class="ruby-ivar">@packets</span> = {
+  <span class="ruby-value">:keep_alive</span>        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+        <span class="ruby-value">:login_request</span>                        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>,
+        <span class="ruby-value">:handshake</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>,
+        <span class="ruby-value">:chat_message</span>                         =<span class="ruby-operator">&gt;</span> <span class="ruby-value">3</span>,
+        <span class="ruby-value">:time_update</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">4</span>,
+        <span class="ruby-value">:entity_equip</span>                         =<span class="ruby-operator">&gt;</span> <span class="ruby-value">5</span>,
+        <span class="ruby-value">:spawn_position</span>               =<span class="ruby-operator">&gt;</span> <span class="ruby-value">6</span>,
+        <span class="ruby-value">:use_entity</span>                   =<span class="ruby-operator">&gt;</span> <span class="ruby-value">7</span>,
+        <span class="ruby-value">:update_health</span>                        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">8</span>,
+        <span class="ruby-value">:respawn</span>                              =<span class="ruby-operator">&gt;</span> <span class="ruby-value">9</span>,
+        <span class="ruby-value">:player</span>                               =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>,
+        <span class="ruby-value">:player_position</span>              =<span class="ruby-operator">&gt;</span> <span class="ruby-value">11</span>,
+        <span class="ruby-value">:player_look</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">12</span>,
+        <span class="ruby-value">:player_position_look</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-value">13</span>,
+        <span class="ruby-value">:player_dig</span>                   =<span class="ruby-operator">&gt;</span> <span class="ruby-value">14</span>,
+        <span class="ruby-value">:player_place</span>                         =<span class="ruby-operator">&gt;</span> <span class="ruby-value">15</span>,
+        <span class="ruby-value">:holding_change</span>               =<span class="ruby-operator">&gt;</span> <span class="ruby-value">16</span>,
+        <span class="ruby-value">:use_bed</span>                              =<span class="ruby-operator">&gt;</span> <span class="ruby-value">17</span>,
+        <span class="ruby-value">:animation</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-value">18</span>,
+        <span class="ruby-value">:entity_action</span>                        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">19</span>,
+        <span class="ruby-value">:named_entity_spawn</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-value">20</span>,
+        <span class="ruby-value">:pickup_spawn</span>                         =<span class="ruby-operator">&gt;</span> <span class="ruby-value">21</span>,
+        <span class="ruby-value">:collect_item</span>                         =<span class="ruby-operator">&gt;</span> <span class="ruby-value">22</span>,
+        <span class="ruby-value">:add_object</span>                           =<span class="ruby-operator">&gt;</span> <span class="ruby-value">23</span>,
+        <span class="ruby-value">:add_vehicle</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">23</span>,
+        <span class="ruby-value">:mob_spawn</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-value">24</span>,
+        <span class="ruby-value">:entity_painting</span>              =<span class="ruby-operator">&gt;</span> <span class="ruby-value">25</span>,
+        <span class="ruby-value">:experience_orb</span>                       =<span class="ruby-operator">&gt;</span> <span class="ruby-value">26</span>,
+        <span class="ruby-value">:stance_update</span>                        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">27</span>,
+        <span class="ruby-value">:entity_velocity</span>              =<span class="ruby-operator">&gt;</span> <span class="ruby-value">28</span>,
+        <span class="ruby-value">:destroy_entity</span>                       =<span class="ruby-operator">&gt;</span> <span class="ruby-value">29</span>,
+        <span class="ruby-value">:entity</span>                                       =<span class="ruby-operator">&gt;</span> <span class="ruby-value">30</span>,
+        <span class="ruby-value">:entity_relative_move</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">31</span>,
+        <span class="ruby-value">:entity_look</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">32</span>,
+        <span class="ruby-value">:entity_look_relative_move</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">33</span>,
+        <span class="ruby-value">:entity_teleport</span>              =<span class="ruby-operator">&gt;</span> <span class="ruby-value">34</span>,
+        <span class="ruby-value">:entity_status</span>                        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">38</span>,
+        <span class="ruby-value">:attach_entity</span>                        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">39</span>,
+        <span class="ruby-value">:entity_metadata</span>              =<span class="ruby-operator">&gt;</span> <span class="ruby-value">40</span>,
+        <span class="ruby-value">:entity_effect</span>                        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">41</span>,
+        <span class="ruby-value">:entity_effect_remove</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-value">42</span>,
+        <span class="ruby-value">:experience</span>                           =<span class="ruby-operator">&gt;</span> <span class="ruby-value">43</span>,
+        <span class="ruby-value">:pre_chunk</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-value">50</span>,
+        <span class="ruby-value">:map_chunk</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-value">51</span>,
+        <span class="ruby-value">:block_change_multi</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-value">52</span>,
+        <span class="ruby-value">:block_change</span>                 =<span class="ruby-operator">&gt;</span> <span class="ruby-value">53</span>,
+        <span class="ruby-value">:block_action</span>                 =<span class="ruby-operator">&gt;</span> <span class="ruby-value">54</span>,
+        <span class="ruby-value">:explosion</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-value">60</span>,
+        <span class="ruby-value">:sound_effect</span>                 =<span class="ruby-operator">&gt;</span> <span class="ruby-value">61</span>,
+        <span class="ruby-value">:new_state</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-value">70</span>,
+        <span class="ruby-value">:invalid_state</span>                        =<span class="ruby-operator">&gt;</span> <span class="ruby-value">70</span>,
+        <span class="ruby-value">:thunderbolt</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">71</span>,
+        <span class="ruby-value">:window_open</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">100</span>,
+        <span class="ruby-value">:window_close</span>                 =<span class="ruby-operator">&gt;</span> <span class="ruby-value">101</span>,
+        <span class="ruby-value">:window_click</span>                 =<span class="ruby-operator">&gt;</span> <span class="ruby-value">102</span>,
+        <span class="ruby-value">:window_set_slot</span>              =<span class="ruby-operator">&gt;</span> <span class="ruby-value">103</span>,
+        <span class="ruby-value">:window_items</span>                 =<span class="ruby-operator">&gt;</span> <span class="ruby-value">104</span>,
+        <span class="ruby-value">:update_progress_bar</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">105</span>,
+        <span class="ruby-value">:transaction</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">106</span>,
+        <span class="ruby-value">:creative_inventory_action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">107</span>,
+        <span class="ruby-value">:update_sign</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">130</span>,
+        <span class="ruby-value">:item_data</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-value">131</span>,
+        <span class="ruby-value">:increment_statistic</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>,
+        <span class="ruby-value">:player_list_item</span>             =<span class="ruby-operator">&gt;</span> <span class="ruby-value">201</span>,
+        <span class="ruby-value">:server_list_ping</span>             =<span class="ruby-operator">&gt;</span> <span class="ruby-value">254</span>,
+        <span class="ruby-value">:server_kick</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">255</span> 
+}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- init_packets-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- init_packets-method -->
+
+    
+      <div id="method-i-keep_alive" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">keep_alive</span><span
+            class="method-args">(connection)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="keep_alive-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">keep_alive</span> <span class="ruby-identifier">connection</span>
+  <span class="ruby-ivar">@last_keep_alive</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">32767</span><span class="ruby-operator">..</span><span class="ruby-value">65536</span>)
+  <span class="ruby-identifier">payload</span> = [<span class="ruby-ivar">@packet</span>[<span class="ruby-value">:keep_alive</span>],<span class="ruby-ivar">@last_keep_alive</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- keep_alive-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- keep_alive-method -->
+
+    
+      <div id="method-i-login_request" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">login_request</span><span
+            class="method-args">(connection, packet)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="login_request-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">login_request</span> <span class="ruby-identifier">connection</span>, <span class="ruby-identifier">packet</span>
+  <span class="ruby-ivar">@log</span>.<span class="ruby-identifier">debug</span> <span class="ruby-identifier">packet</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- login_request-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- login_request-method -->
+
+    
+      <div id="method-i-read_packet" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_packet</span><span
+            class="method-args">(connection, packet, player)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_packet-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_packet</span> <span class="ruby-identifier">connection</span>, <span class="ruby-identifier">packet</span>, <span class="ruby-identifier">player</span>
+  <span class="ruby-ivar">@player</span> = <span class="ruby-identifier">player</span>
+        <span class="ruby-identifier">packet_id</span> = <span class="ruby-identifier">packet</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>].<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;C&quot;</span>)[<span class="ruby-value">0</span>]
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Packet Id: &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">packet_id</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-comment">#puts &quot;Received Packet: &quot;+@packets.key(packet_id).to_s</span>
+        <span class="ruby-keyword">case</span> <span class="ruby-identifier">packet_id</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-ivar">@packets</span>[<span class="ruby-value">:server_list_ping</span>]
+                <span class="ruby-identifier">server_list_ping</span> <span class="ruby-identifier">connection</span>, <span class="ruby-identifier">packet</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-ivar">@packets</span>[<span class="ruby-value">:login_request</span>]
+          <span class="ruby-identifier">login_request</span> <span class="ruby-identifier">connection</span>, <span class="ruby-identifier">packet</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-ivar">@packets</span>[<span class="ruby-value">:handshake</span>]
+          <span class="ruby-identifier">handshake</span> <span class="ruby-identifier">connection</span>, <span class="ruby-identifier">packet</span>
+        <span class="ruby-keyword">end</span>
+    
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_packet-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_packet-method -->
+
+    
+      <div id="method-i-send_kick" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_kick</span><span
+            class="method-args">(connection)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="send_kick-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 128</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_kick</span> <span class="ruby-identifier">connection</span>
+  <span class="ruby-comment">#TODO: Finish Kick Stub</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_kick-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_kick-method -->
+
+    
+      <div id="method-i-server_list_ping" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">server_list_ping</span><span
+            class="method-args">(connection, packet)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="server_list_ping-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">server_list_ping</span> <span class="ruby-identifier">connection</span>, <span class="ruby-identifier">packet</span>
+        <span class="ruby-ivar">@log</span>.<span class="ruby-identifier">debug</span> <span class="ruby-string">&quot;Got ping connection&quot;</span>
+        <span class="ruby-comment">#Always returns 0 players online. </span>
+        <span class="ruby-identifier">message</span> = <span class="ruby-identifier">utfize</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">description</span>) <span class="ruby-operator">+</span> <span class="ruby-ivar">@delim</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">utfize</span>(<span class="ruby-value">0</span>.<span class="ruby-identifier">to_s</span>) <span class="ruby-operator">+</span> <span class="ruby-ivar">@delim</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">utfize</span>(<span class="ruby-value">20</span>.<span class="ruby-identifier">to_s</span>)
+        <span class="ruby-ivar">@log</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Message size: #{message.size}&quot;</span>
+        <span class="ruby-identifier">payload</span> =  [<span class="ruby-ivar">@packets</span>[<span class="ruby-value">:server_kick</span>],<span class="ruby-identifier">message</span>.<span class="ruby-identifier">size</span>]
+        <span class="ruby-identifier">message_bytes</span> = []
+        <span class="ruby-identifier">message</span>.<span class="ruby-identifier">each_byte</span> <span class="ruby-keyword">do</span> 
+                <span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">message_bytes</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">b</span>)
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">message_bytes</span>)
+        <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">send_data</span> <span class="ruby-identifier">bisect</span>(<span class="ruby-identifier">payload</span>).<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;C*&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- server_list_ping-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- server_list_ping-method -->
+
+    
+      <div id="method-i-utfize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">utfize</span><span
+            class="method-args">(string)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="utfize-source">
+            <pre><span class="ruby-comment"># File lib/protocol/beta.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">utfize</span> <span class="ruby-identifier">string</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-string">&quot;UTF-16&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- utfize-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- utfize-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

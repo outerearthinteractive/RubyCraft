@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>README</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./README.html">README</a>
+  
+    <li class="file"><a href="./TODO.html">TODO</a>
+  
+    <li class="file"><a href="./log_txt.html">log</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./BetaProtocol.html">BetaProtocol</a>
+  
+    <li><a href="./Block.html">Block</a>
+  
+    <li><a href="./Chunk.html">Chunk</a>
+  
+    <li><a href="./CommandHandler.html">CommandHandler</a>
+  
+    <li><a href="./Configuration.html">Configuration</a>
+  
+    <li><a href="./Connection.html">Connection</a>
+  
+    <li><a href="./MultiIO.html">MultiIO</a>
+  
+    <li><a href="./Player.html">Player</a>
+  
+    <li><a href="./Plugin.html">Plugin</a>
+  
+    <li><a href="./Protocol.html">Protocol</a>
+  
+    <li><a href="./RubycraftLogger.html">RubycraftLogger</a>
+  
+    <li><a href="./Server.html">Server</a>
+  
+    <li><a href="./World.html">World</a>
+  
+    <li><a href="./WorldConfig.html">WorldConfig</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<p>This class provides configuration variables for the entire server. At a
+later date, it will be superseded with a more dynamic configuration-backend
+loading scheme.</p>
+
+<h2 id="label-Authors++++">Authors    </h2>
+<ul><li>
+<p>Tanner Danzey (<a href="mailto:arkaniad@gmail.com">arkaniad@gmail.com</a>)</p>
+</li><li>
+<p>Tristan Rice (<a href="mailto:rice@outerearth.net">rice@outerearth.net</a>)</p>
+</li></ul>
+
+<h2 id="label-License+++">License   </h2>
+
+<p>Distributes under the same terms as Ruby</p>
+
+<h2 id="label-Variables">Variables</h2>
+<ul><li>
+<p><em>interface</em> = the interface that the server will listen to. 0.0.0.0
+listens on every interface, which is default.</p>
+</li><li>
+<p><em>port</em> = port that the server will listen on. Default should be
+25565, which is standard.</p>
+</li><li>
+<p><em>maxplayers</em> = maximum amount of players allowed on the server at a
+time.</p>
+</li><li>
+<p><em>description</em> = description that will be shown in the server list on
+supporting clients.</p>
+</li><li>
+<p><em>motd</em> = message displayed to clients upon connection. empty strings
+will be treated as no message at all.</p>
+</li><li>
+<p><em>minversion</em> = not used yet, can be anything.</p>
+</li><li>
+<p><em>maxversion</em> = not used yet, can be anything.</p>
+</li><li>
+<p><em>authenticate</em> = whether the server should authenticate clients with
+minecraft.net.</p>
+</li></ul>
+
+<h2 id="label-Example">Example</h2>
+<ul><li>
+<p><em>minversion</em> = not used yet, can be anything. May never be used
+(most likely).</p>
+</li><li>
+<p><em>maxversion</em> = not used yet, can be anything. May never be used
+(most likely).</p>
+</li><li>
+<p><em>protocols</em> = an array of protocol handlers. Currently the only one
+is: <a href="BetaProtocol.html">BetaProtocol</a></p>
+</li><li>
+<p><em>worlds</em> = an array of <a href="WorldConfig.html">WorldConfig</a>
+elements. <a href="WorldConfig.html#method-c-new">WorldConfig.new</a>(
+&lt;String, <a href="World.html">World</a> Name&gt;, [&lt;Terrain
+Generators&gt;])</p>
+</li></ul>
+
+<h2 id="label-Examples">Examples</h2>
+
+<pre>@interface = &quot;0.0.0.0&quot;
+@port = 25565
+@maxplayers = 24
+@description = &quot;Tanner's Server O' fun!&quot;
+@motd = &quot;Welcome to Tanner's Server O' fun! Enjoy yourself!&quot;
+@minversion = 0
+@maxversion = 10000
+@protocols = [BetaProtocol]
+@authenticate = true
+      @worlds = []
+      @worlds.pop WorldConfig.new( &quot;world1&quot;, [FlatGenerator] )</pre>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

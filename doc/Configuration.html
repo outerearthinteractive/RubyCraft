@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>Class: Configuration</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>config.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-new">::new</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./README.html">README</a>
+  
+    <li class="file"><a href="./TODO.html">TODO</a>
+  
+    <li class="file"><a href="./log_txt.html">log</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./BetaProtocol.html">BetaProtocol</a>
+  
+    <li><a href="./Block.html">Block</a>
+  
+    <li><a href="./Chunk.html">Chunk</a>
+  
+    <li><a href="./CommandHandler.html">CommandHandler</a>
+  
+    <li><a href="./Configuration.html">Configuration</a>
+  
+    <li><a href="./Connection.html">Connection</a>
+  
+    <li><a href="./MultiIO.html">MultiIO</a>
+  
+    <li><a href="./Player.html">Player</a>
+  
+    <li><a href="./Plugin.html">Plugin</a>
+  
+    <li><a href="./Protocol.html">Protocol</a>
+  
+    <li><a href="./RubycraftLogger.html">RubycraftLogger</a>
+  
+    <li><a href="./Server.html">Server</a>
+  
+    <li><a href="./World.html">World</a>
+  
+    <li><a href="./WorldConfig.html">WorldConfig</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Configuration</h1>
+
+  <div id="description" class="description">
+    
+<p>This class provides configuration variables for the entire server. At a
+later date, it will be superseded with a more dynamic configuration-backend
+loading scheme.</p>
+
+<h2 id="label-Authors++++">Authors    </h2>
+<ul><li>
+<p>Tanner Danzey (<a href="mailto:arkaniad@gmail.com">arkaniad@gmail.com</a>)</p>
+</li><li>
+<p>Tristan Rice (<a href="mailto:rice@outerearth.net">rice@outerearth.net</a>)</p>
+</li></ul>
+
+<h2 id="label-License+++">License   </h2>
+
+<p>Distributes under the same terms as Ruby</p>
+
+<h2 id="label-Variables">Variables</h2>
+<ul><li>
+<p><em>interface</em> = the interface that the server will listen to. 0.0.0.0
+listens on every interface, which is default.</p>
+</li><li>
+<p><em>port</em> = port that the server will listen on. Default should be
+25565, which is standard.</p>
+</li><li>
+<p><em>maxplayers</em> = maximum amount of players allowed on the server at a
+time.</p>
+</li><li>
+<p><em>description</em> = description that will be shown in the server list on
+supporting clients.</p>
+</li><li>
+<p><em>motd</em> = message displayed to clients upon connection. empty strings
+will be treated as no message at all.</p>
+</li><li>
+<p><em>minversion</em> = not used yet, can be anything.</p>
+</li><li>
+<p><em>maxversion</em> = not used yet, can be anything.</p>
+</li><li>
+<p><em>authenticate</em> = whether the server should authenticate clients with
+minecraft.net.</p>
+</li></ul>
+
+<h2 id="label-Example">Example</h2>
+<ul><li>
+<p><em>minversion</em> = not used yet, can be anything. May never be used
+(most likely).</p>
+</li><li>
+<p><em>maxversion</em> = not used yet, can be anything. May never be used
+(most likely).</p>
+</li><li>
+<p><em>protocols</em> = an array of protocol handlers. Currently the only one
+is: <a href="BetaProtocol.html">BetaProtocol</a></p>
+</li><li>
+<p><em>worlds</em> = an array of <a href="WorldConfig.html">WorldConfig</a>
+elements. <a href="WorldConfig.html#method-c-new">WorldConfig.new</a>(
+&lt;String, <a href="World.html">World</a> Name&gt;, [&lt;Terrain
+Generators&gt;])</p>
+</li></ul>
+
+<h2 id="label-Examples">Examples</h2>
+
+<pre>@interface = &quot;0.0.0.0&quot;
+@port = 25565
+@maxplayers = 24
+@description = &quot;Tanner's Server O' fun!&quot;
+@motd = &quot;Welcome to Tanner's Server O' fun! Enjoy yourself!&quot;
+@minversion = 0
+@maxversion = 10000
+@protocols = [BetaProtocol]
+@authenticate = true
+      @worlds = []
+      @worlds.pop WorldConfig.new( &quot;world1&quot;, [FlatGenerator] )</pre>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-authenticate" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">authenticate</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-description" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">description</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-interface" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">interface</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-maxplayers" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">maxplayers</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-maxversion" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">maxversion</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-minversion" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">minversion</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-motd" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">motd</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-port" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">port</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-protocols" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">protocols</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File config.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-ivar">@interface</span> = <span class="ruby-string">&quot;0.0.0.0&quot;</span>
+  <span class="ruby-ivar">@port</span> = <span class="ruby-value">25565</span>
+  <span class="ruby-ivar">@maxplayers</span> = <span class="ruby-value">20</span>
+  <span class="ruby-ivar">@description</span> = <span class="ruby-string">&quot;RubyCraft Test Server!&quot;</span>
+  <span class="ruby-ivar">@motd</span> = <span class="ruby-string">&quot;Welcome to the server!&quot;</span>
+  <span class="ruby-ivar">@minversion</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@maxversion</span> = <span class="ruby-value">9001</span>
+  <span class="ruby-ivar">@protocols</span> = [<span class="ruby-constant">BetaProtocol</span>]
+  <span class="ruby-ivar">@authenticate</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@worlds</span> = []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
