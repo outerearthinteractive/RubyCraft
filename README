@@ -3,3 +3,5 @@ This is a minecraft server in Ruby!
 Required:
 ruby
 eventmachine (For most: gem install eventmachine)
+
+Now on GitHub! Hello!
