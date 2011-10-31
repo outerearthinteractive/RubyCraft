@@ -1,7 +1,7 @@
 
 class BetaProtocol
 	def init_packets
-	@player
+	@players
 	@last_keep_alive = 0
 	@delim = "\xA7".force_encoding("UTF-16")
 	@packets = {
@@ -82,8 +82,8 @@ class BetaProtocol
 		@log.info("BetaProtocol Enabled!")
 		@log.info @packets[:server_list_ping]
 	end
-	def read_packet connection, packet, player
-	  @player = player
+	def read_packet connection, packet, players
+	  @players = players
 		packet_id = packet[0,1].unpack("C")[0]
 		puts "Packet Id: "+packet_id.to_s
 		#puts "Received Packet: "+@packets.key(packet_id).to_s
@@ -98,9 +98,9 @@ class BetaProtocol
     
 	end
 	def handshake connection, packet
-	  @player.name = packet.chomp
-	  puts @player.inspect
-	  puts packet
+	  @log.info("Connected player: #{packet.chomp}")
+	  @log.info("Dropping player, no further protocol is implemented!")
+		send_kick connection
 	end
 	def login_request connection, packet
 	  @log.debug packet
@@ -126,7 +126,7 @@ class BetaProtocol
 	end
 	
 	def send_kick connection
-	  #TODO: Finish Kick Stub
+	  @log.info("Kick not implemented!")
 	end
 	def utfize string
 		return string.force_encoding("UTF-16")
