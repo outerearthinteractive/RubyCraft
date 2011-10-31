@@ -1,6 +1,9 @@
 This is a minecraft server in Ruby. That is all you need to know.
 Server settings lie in config.rb.
+To start the server just run "ruby main.rb" in the root directory.
 
-Required gems:
+Required Software:
+ruby - Linux (sudo apt-get install ruby)
 
-eventmachine 
+Required Gems:
+eventmachine - (gem install eventmachine)
