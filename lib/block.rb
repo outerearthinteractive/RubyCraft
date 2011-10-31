@@ -14,15 +14,16 @@
 #
 #
 class Block
-@block_x
-@block_y
-@block_z
-@block_type
-@block_data
+	attr_accessor :x, :y, :z, :type, :data
+	@x
+	@y
+	@z
+	@type
+	@data
 	def initialize x, y, z, type
-		@block_x = x
-		@block_y = y
-		@block_z = z
-		@block_type = type
+		@x = x
+		@y = y
+		@z = z
+		@type = type
 	end
 end

@@ -31,8 +31,8 @@
 #   @maxversion = 10000
 #   @protocols = [BetaProtocol]
 #   @authenticate = true
-#	  @worlds = []
-#	  @worlds.pop WorldConfig.new( "world1", 15, [FlatGenerator] )
+#	@worlds = []
+#	@worlds.push WorldConfig.new( "boring_world1", 15, [FlatgrassGenerator] )
 class Configuration
   attr_accessor :interface, :port, :maxplayers, :description, :motd, :minversion, :maxversion, :protocols, :authenticate, :worlds
   def initialize
@@ -46,6 +46,7 @@ class Configuration
     @protocols = [BetaProtocol]
     @authenticate = true
     @worlds = []
+    @worlds.push WorldConfig.new( "world1", 15, [FlatgrassGenerator] )
   end
 end
 

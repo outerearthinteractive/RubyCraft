@@ -1,24 +1,30 @@
 #require("block.rb")
 
 class Chunk
+attr_accessor :blocks, :x, :z
 @server
 @world
-@chunk_x
-@chunk_y
-@chunk_blocks
+@x
+@z
+@cblocks
 	def initialize server, world, x, z
 		@server = server
 		@world = world
-		@chunk_blocks = []
+		@x = x
+		@z = z
+		@blocks = []
 		x = 0
 		16.times do
 			z=0
 			16.times do
 				y=0
 				128.times do
-					@chunk_blocks += [Block.new(x,y,z,0)]
+					@blocks += [Block.new(x,y,z,0)]
+					y+=1
 				end
+				z+=1
 			end
+			x+=1
 		end
 	end
 	def get_block_at x, y, z
