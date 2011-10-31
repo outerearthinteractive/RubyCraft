@@ -20,6 +20,6 @@ chmod +x main.rb
 
 Required Software
 -----------------
-ruby - Linux (sudo apt-get install ruby)
+ruby 1.9 - Linux (sudo apt-get install ruby19, or use RVM. 1.9 is necessary!)
 	gems:	
 	eventmachine - (gem install eventmachine)

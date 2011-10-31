@@ -3,7 +3,7 @@ class BetaProtocol
 	def init_packets
 	@players
 	@last_keep_alive = 0
-	@delim = "\xA7".force_encoding("UTF-16")
+	@delim = "\xA7".force-encoding("UTF-16")
 	@packets = {
 	  :keep_alive        => 0,
 		:login_request 			=> 1,
