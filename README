@@ -1,9 +1,25 @@
-This is a minecraft server in Ruby. That is all you need to know.
-Server settings lie in config.rb.
+RubyCraft
+=========
+
+About
+-----
+RubyCraft is a Minecraft server written completely in the Ruby language and utilizing the EventMachine network library. At the present moment, it's incomplete, but you are welcome to hack upon it.
+
+Configuration
+-------------
+All of the server settings lie in the file 'config.rb', which is right next to main.rb.
+
+Running
+-------
+
 To start the server just run "ruby main.rb" in the root directory.
 
-Required Software:
-ruby - Linux (sudo apt-get install ruby)
+Alternatively, if you are using *nix, you can do this:
+chmod +x main.rb
+./main.rb
 
-Required Gems:
-eventmachine - (gem install eventmachine)
+Required Software
+-----------------
+ruby - Linux (sudo apt-get install ruby)
+	gems:	
+	eventmachine - (gem install eventmachine)
