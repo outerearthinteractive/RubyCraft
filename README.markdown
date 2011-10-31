@@ -7,19 +7,19 @@ RubyCraft is a Minecraft server written completely in the Ruby language and util
 
 Configuration
 -------------
-All of the server settings lie in the file 'config.rb', which is right next to main.rb.
+All of the server settings lie in the file _config.rb_, which is right next to main.rb.
 
 Running
 -------
 
-To start the server just run "ruby main.rb" in the root directory.
+To start the server just run _ruby main.rb_ in the root directory.
 
-Alternatively, if you are using *nix, you can do this:
-chmod +x main.rb
-./main.rb
+Alternatively, if you are using Li/unix, you can do this:
+_chmod +x main.rb_
+_./main.rb_
 
 Required Software
 -----------------
-ruby 1.9 - Linux (sudo apt-get install ruby19, or use RVM. 1.9 is necessary!)
+__ruby 1.9__ - Linux (_sudo apt-get install ruby19_, or use RVM. 1.9 is necessary!)
 	gems:	
-	eventmachine - (gem install eventmachine)
+	__eventmachine__ - (_gem install eventmachine_)
