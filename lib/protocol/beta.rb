@@ -119,7 +119,7 @@ class BetaProtocol
 	def server_list_ping connection, packet
 		@log.debug "Got ping connection"
 		#Always returns 0 players online. 
-		message = utfize(@config.description) + @delim + utfize(0.to_s) + @delim + utfize(20.to_s)
+		message = utfize(@config.description) + @delim + utfize(@server.players.length.to_s) + @delim + utfize(@config.max_players.to_s)
 		payload =  [@packets[:server_kick]]
 		payload.concat(string16 message)
 		connection.send_data bisect(payload).pack("C*")
