@@ -102,6 +102,8 @@ class BetaProtocol
 	end
 	def handshake connection, packet
 	  	@log.info("Handshake from player: #{packet.chomp}")
+		@log.info("Adding player to active list.")
+		@players += {packet.chomp => Player.new(packet.chomp)}
 	  	payload =  [@packets[:handshake]]
 		payload.concat(string16 "-")
 		connection.send_data bisect(payload).pack("C*")
