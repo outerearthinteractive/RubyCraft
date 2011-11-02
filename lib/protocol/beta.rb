@@ -85,7 +85,7 @@ class BetaProtocol
 	def read_packet connection, packet, players
 	  @players = players
 		packet_id = packet[0,1].unpack("C")[0]
-		puts "Packet Id: "+packet_id.to_s
+		@log.debug("Packet Id: #{packet_id}")
 		#puts "Received Packet: "+@packets.key(packet_id).to_s
 		case packet_id
 		when @packets[:server_list_ping]
@@ -94,20 +94,25 @@ class BetaProtocol
 		  login_request connection, packet
 		when @packets[:handshake]
 		  handshake connection, packet
+		else
+			@log.info("TODO: Implement #{packet_id}")
+			send_kick connection, "TODO: Implement #{packet_id}"
 		end
     
 	end
 	def handshake connection, packet
-	  @log.info("Connected player: #{packet.chomp}")
-	  @log.info("Dropping player, no further protocol is implemented!")
-		send_kick connection
+	  	@log.info("Handshake from player: #{packet.chomp}")
+	  	payload =  [@packets[:handshake]]
+		payload.concat(string16 "-")
+		connection.send_data bisect(payload).pack("C*")
 	end
 	def login_request connection, packet
 	  @log.debug packet
 	end
 	def keep_alive connection
-	  @last_keep_alive = rand(32767..65536)
-	  payload = [@packet[:keep_alive],@last_keep_alive]
+	  	@last_keep_alive = rand(32767..65536)
+	  	payload = [@packet[:keep_alive],@last_keep_alive]
+	  	connection.send_data bisect(payload).pack("C*")
 	end
 	def check_keep_alive connection, packet
 	end
@@ -115,23 +120,34 @@ class BetaProtocol
 		@log.debug "Got ping connection"
 		#Always returns 0 players online. 
 		message = utfize(@config.description) + @delim + utfize(0.to_s) + @delim + utfize(20.to_s)
-		@log.debug "Message size: #{message.size}"
-		payload =  [@packets[:server_kick],message.size]
+		payload =  [@packets[:server_kick]]
+		payload.concat(string16 message)
+		connection.send_data bisect(payload).pack("C*")
+	end
+	
+	def send_kick connection, reason
+	  	@log.info("Kicking: #{connection.player.name}, Reason: #{reason}")
+	  	payload =  [@packets[:server_kick]]
+		payload.concat(string16 reason)
+		connection.send_data bisect(payload).pack("C*")
+	end
+	
+	def string16 message
+		payload = [message.size]
+		payload.concat(bytize(message))
+		return payload
+	end
+	def bytize message
 		message_bytes = []
 		message.each_byte do 
 			|b| message_bytes.push(b)
 		end
-		payload.concat(message_bytes)
-		connection.send_data bisect(payload).pack("C*")
-	end
-	
-	def send_kick connection
-	  @log.info("Kick not implemented!")
+		return message_bytes
 	end
 	def utfize string
 		return string.force_encoding("UTF-16")
 	end
-	def bisect array
+	def bisect array #Epic hack to fake utf16
 		buffer = []
 		array.each { |item|
 			buffer.push item
