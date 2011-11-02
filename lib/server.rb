@@ -8,12 +8,11 @@ require 'rubygems'
 require 'eventmachine'
 require(File.join(File.dirname(__FILE__), "protocol.rb"))
 class Server
-	attr_accessor :connections, :protocol, :log, :players
+	attr_accessor :connections, :protocol, :log, :players, :worlds
 	@plugins
 	@lib_path
 	@plugin_path
 	@configuration
-	@players
 	def initialize
 		@log = RubycraftLogger.new("RubyCraft")
 		@log.info("Initialized")
