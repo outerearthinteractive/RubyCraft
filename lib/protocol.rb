@@ -9,9 +9,9 @@ class ProtocolHandler
 			@protocols += [(proto.new @server)]
 		end
 	end
-	def read_packet connection, packet, players
+	def read_packet connection, packet
 		@protocols.each do |p|
-			p.read_packet connection, packet, players
+			p.read_packet connection, packet
 		end
 	end
 end

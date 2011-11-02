@@ -75,15 +75,15 @@ class BetaProtocol
 	end
 			
 	def initialize server
-		@log = server.log
 		@server = server
+		@log = server.log
 		@config = server.config
+		@players = server.players
 		init_packets()
 		@log.info("BetaProtocol Enabled!")
 		@log.info @packets[:server_list_ping]
 	end
-	def read_packet connection, packet, players
-	  @players = players
+	def read_packet connection, packet
 		packet_id = packet[0,1].unpack("C")[0]
 		@log.debug("Packet Id: #{packet_id}")
 		#puts "Received Packet: "+@packets.key(packet_id).to_s
