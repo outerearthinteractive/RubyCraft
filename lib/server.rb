@@ -28,7 +28,7 @@ class Server
 		@server = EventMachine::start_server @configuration.interface, @configuration.port, Connection do |con|
 			con.server = self
 			con.log = @log
-			con.players = @players
+			#con.players = @players
 		end
 		@console = EventMachine::open_keyboard(CommandHandler) do |con|
 			con.server = self

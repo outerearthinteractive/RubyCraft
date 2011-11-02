@@ -81,7 +81,6 @@ class BetaProtocol
 		@players = server.players
 		init_packets()
 		@log.info("BetaProtocol Enabled!")
-		@log.info @packets[:server_list_ping]
 	end
 	def read_packet connection, packet
 		packet_id = packet[0,1].unpack("C")[0]
@@ -103,7 +102,8 @@ class BetaProtocol
 	def handshake connection, packet
 	  	@log.info("Handshake from player: #{packet.chomp}")
 		@log.info("Adding player to active list.")
-		@server.worlds[0].load_player(packet.chomp, connection)
+		#Loading worlds not implemented yet. Currently crashes w/ this uncommented due to no worlds.
+		#@server.worlds[0].load_player(packet.chomp, connection)
 	  	payload =  [@packets[:handshake]]
 		payload.concat(string16 "-")
 		connection.send_data bisect(payload).pack("C*")
