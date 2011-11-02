@@ -20,6 +20,13 @@ class Server
 		@connections = []
 		@protocol = ProtocolHandler.new self
 		@players = {}
+		if @configuration.max_players == -1
+			@configuration.max_players = 65536
+		end
+		worlds=[]
+		@configuration.worlds.each do |world|
+			worlds.push World.new(self,world)
+		end
 	end
 	def config
 		return @configuration

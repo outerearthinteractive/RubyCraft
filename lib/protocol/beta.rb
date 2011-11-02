@@ -102,8 +102,7 @@ class BetaProtocol
 	def handshake connection, packet
 	  	@log.info("Handshake from player: #{packet.chomp}")
 		@log.info("Adding player to active list.")
-		#Loading worlds not implemented yet. Currently crashes w/ this uncommented due to no worlds.
-		#@server.worlds[0].load_player(packet.chomp, connection)
+		@server.worlds[0].load_player(packet.chomp, connection)
 	  	payload =  [@packets[:handshake]]
 		payload.concat(string16 "-")
 		connection.send_data bisect(payload).pack("C*")
@@ -122,9 +121,7 @@ class BetaProtocol
 		@log.debug "Got ping connection"
 		#Always returns 0 players online. 
 		message = utfize(@config.description) + @delim + utfize(@server.players.length.to_s) + @delim + utfize(@config.max_players.to_s)
-		payload =  [@packets[:server_kick]]
-		payload.concat(string16 message)
-		connection.send_data bisect(payload).pack("C*")
+		send_kick connection, message
 	end
 	
 	def send_kick connection, reason

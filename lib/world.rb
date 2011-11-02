@@ -6,17 +6,17 @@ attr_accessor :config, :name, :players
 @name
 @seed
 @loaded_chunks
-	def initialize server, world_name, world_seed, world_config
-		if !File.exists?("../world/#{world_name}")
-			File.new("../world/#{world_name}/")
-			File.new("../world/#{world_name}/chunk/")
-			File.new("../world/#{world_name}/player/")
-		end
+	def initialize server, world_config
 		@server = server
-		@name = world_name
-		@seed = world_seed
+		@name = world_config.name
+		@seed = world_config.seed
 		@config = world_config
 		@players = {}
+		if !File.exists?(File.join(File.dirname(__FILE__),"../world/#{@name}"))
+			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/"))
+			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/"))
+			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/player/"))
+		end
 	end
 	def save_player name
 		File.open("../world/#{@name}/player/#{name}.yml", "w") do |file|
