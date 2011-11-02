@@ -34,11 +34,11 @@
 #	@worlds = []
 #	@worlds.push WorldConfig.new( "boring_world1", 15, [FlatgrassGenerator] )
 class Configuration
-  attr_accessor :interface, :port, :maxplayers, :description, :motd, :minversion, :maxversion, :protocols, :authenticate, :worlds
+  attr_accessor :interface, :port, :max_players, :description, :motd, :minversion, :maxversion, :protocols, :authenticate, :worlds
   def initialize
     @interface = "0.0.0.0"
     @port = 25565
-    @maxplayers = 20
+    @max_players = 9001
     @description = "RubyCraft Test Server!"
     @motd = "Welcome to the server!"
     @minversion = 0
