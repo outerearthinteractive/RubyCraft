@@ -8,7 +8,7 @@ require 'rubygems'
 require 'eventmachine'
 require(File.join(File.dirname(__FILE__), "protocol.rb"))
 class Server
-	attr_accessor :connections, :protocol, :log, :players, :worlds
+	attr_accessor :connections, :protocol, :log, :players, :worlds, :terrain_generator
 	@plugins
 	@lib_path
 	@plugin_path
@@ -23,6 +23,7 @@ class Server
 		if @configuration.max_players == -1
 			@configuration.max_players = 2147483647
 		end
+		@terrain_generator = GeneratorHandeler.new(self)
 		@worlds=[]
 		@configuration.worlds.each do |world|
 			@worlds<< World.new(self,world)

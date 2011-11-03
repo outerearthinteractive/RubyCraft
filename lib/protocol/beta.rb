@@ -110,16 +110,26 @@ class BetaProtocol
 		unpacked = debisect(packet.unpack("ClU*"))
 		player = unpacked[3..19].pack("U*")
 		@log.info("Login: #{player} has joined the server.")
-		@server.worlds[0].load_player(player, connection)
+		world_select = @server.worlds[0]
+		@server.worlds.each do |world|
+			if world.name == @config.default_world
+				world_select = world
+			end
+		end
+		world_select.load_player(player, connection)
 		payload = [@packets[:login_request]]
-		payload.concat int(1) #Ent id
+		payload.concat int(player.id) #Ent id
 		payload.concat string16("") #Unused
-		payload.concat long @server.worlds[0].seed	#world seed
-		payload.concat int 1				#server mode (1 for creative. 0 for survival)
-		payload.concat byte 0				#dimention -1 for hell 0 for norm
-		payload.concat byte 0				#difficulty
-		payload.concat [128]				#world_height
-		payload.concat [60]					#players on server. More than 60 glitches
+		payload.concat long world_select.seed	#world seed
+		payload.concat int world_select.type		#server mode (1 for creative. 0 for survival)
+		payload.concat byte world_select.dimention		#dimention -1 for hell 0 for norm
+		payload.concat byte world_select.difficulty				#difficulty
+		payload.concat [world_select.height]				#world_height
+		max_players = @config.max_players
+		if max_players > 60
+			max_players = 60
+		end
+		payload.concat [max_players]					#Max players on server. More than 60 glitches
 	  	connection.send_data bisect(payload).pack("C*")
 	  	
 	  	#TODO: Send Pre-Chunks
@@ -155,12 +165,13 @@ class BetaProtocol
 		connection.send_data bisect(payload).pack("C*")
 	end
 	def keep_alive connection
-	  	@last_keep_alive = rand(32767..65536)
+	  	@last_keep_alive = rand(0..32767)
 	  	payload = [@packets[:keep_alive]]
 	  	payload.concat int @last_keep_alive
 	  	connection.send_data bisect(payload).pack("C*")
 	end
 	def check_keep_alive connection, packet
+		#TODO: Implement time outs. (Low priority)
 	end
 	def server_list_ping connection, packet
 		@log.debug "Got ping connection"

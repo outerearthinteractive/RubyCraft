@@ -3,7 +3,8 @@ Dir.glob(File.dirname(__FILE__) + '/generator/*.rb') {|file| require file}
 class GeneratorHandeler
 	def initialize server
 		@server = server
-		@config_worlds = server.configuration.worlds
+		@config_worlds = server.config.worlds
+		@server.log.info("Terrain Generator enabled.")
 	end
 	def generate_chunk world, x, z
 		chunk = Chunk.new @server, world, x, z
