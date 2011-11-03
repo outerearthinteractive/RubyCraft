@@ -14,12 +14,15 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 		@dimension = 0 #0 = Normal, -1 = Nether
 		@type = 1 #1 = creative, 0 = survival
 		@difficulty = 0
-		if !File.exists?(File.join(File.dirname(__FILE__),"../world/#{@name}"))
-			@server.log.info "Creating filespace for world: #{@name}"
-			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/"))
-			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/"))
-			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/player/"))
-			load_chunk 0,0
+		if File.exists?(File.join(File.dirname(__FILE__)))
+		
+			if !File.exists?(File.join(File.dirname(__FILE__),"../world/#{@name}"))
+				@server.log.info "Creating filespace for world: #{@name}"
+				Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/"))
+				Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/"))
+				Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/player/"))
+				load_chunk 0,0
+			end
 		end
 		@server.log.info("Loaded world: #{@name}")
 	end
