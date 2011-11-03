@@ -123,9 +123,15 @@ class BetaProtocol
 	  	connection.send_data bisect(payload).pack("C*")
 	  	
 	  	#TODO: Send Pre-Chunks
-	  	send_spawn_position connection, 0, 80, 0
+	  	EventMachine::Timer.new(0.2) do
+	  		@log.debug("spawn_pos timer!")
+	  		send_spawn_position connection, 0, 80, 0
+	  	end
 	  	#TODO: Send Inventory
-	  	send_player_position_look connection, 0.0,80.0,0.0,0.0,0.0,false,67.24
+	  	EventMachine::Timer.new(0.4) do
+	  		@log.debug("player_pos timer!")
+	  		send_player_position_look connection, 0.0,80.0,0.0,0.0,0.0,false,67.24
+	  	end
 	end
 	def send_spawn_position connection, x, y, z
 		payload = [@packets[:spawn_position]]
