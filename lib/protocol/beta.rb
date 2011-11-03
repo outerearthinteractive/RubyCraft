@@ -108,7 +108,7 @@ class BetaProtocol
 	end
 	def login_request connection, packet
 		unpacked = debisect(packet.unpack("ClU*"))
-		player = unpacked[3..19].pack("U*")
+		player = @players[unpacked[3..19].pack("U*")]
 		@log.info("Login: #{player} has joined the server.")
 		world_select = @server.worlds[0]
 		@server.worlds.each do |world|
