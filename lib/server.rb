@@ -21,11 +21,11 @@ class Server
 		@protocol = ProtocolHandler.new self
 		@players = {}
 		if @configuration.max_players == -1
-			@configuration.max_players = 65536
+			@configuration.max_players = 2147483647
 		end
-		worlds=[]
+		@worlds=[]
 		@configuration.worlds.each do |world|
-			worlds.push World.new(self,world)
+			@worlds<< World.new(self,world)
 		end
 	end
 	def config

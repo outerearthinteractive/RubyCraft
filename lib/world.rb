@@ -1,10 +1,8 @@
 require "yaml"
 
 class World
-attr_accessor :config, :name, :players
+attr_accessor :config, :name, :players, :seed
 @server
-@name
-@seed
 @loaded_chunks
 	def initialize server, world_config
 		@server = server
@@ -17,9 +15,11 @@ attr_accessor :config, :name, :players
 			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/"))
 			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/player/"))
 		end
+		@server.log.info("Loaded world: #{@name}")
 	end
 	def save_player name
-		File.open("../world/#{@name}/player/#{name}.yml", "w") do |file|
+		player_file = File.join(File.dirname(__FILE__),"../world/#{@name}/player/#{name}.yml")
+		File.open(player_file, "w") do |file|
 			file.puts YAML::dump(@players[name])
 		end
 	end
@@ -27,8 +27,9 @@ attr_accessor :config, :name, :players
 		@players[name].delete
 	end
 	def load_player name, connection
-		if File.exists?("../world/#{@name}/player/#{name}.yml")
-			File.open("../world/#{@name}/player/#{name}.yml", "r").each do |object|
+		player_file = File.join(File.dirname(__FILE__),"../world/#{@name}/player/#{name}.yml")
+		if File.exists?(player_file)
+			File.open(player_file, "r").each do |object|
 				player = YAML::load(object)
 			end
 		else

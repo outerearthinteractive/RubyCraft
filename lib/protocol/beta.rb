@@ -84,9 +84,11 @@ class BetaProtocol
 	end
 	def read_packet connection, packet
 		packet_id = packet[0,1].unpack("C")[0]
-		@log.debug("Packet Id: #{packet_id}")
+		@log.debug("Recieved Packet Id: #{packet_id}")
 		#puts "Received Packet: "+@packets.key(packet_id).to_s
 		case packet_id
+		when @packets[:keep_alive]
+			keep_alive connection
 		when @packets[:server_list_ping]
 			server_list_ping connection, packet
 		when @packets[:login_request]
@@ -100,19 +102,56 @@ class BetaProtocol
     
 	end
 	def handshake connection, packet
-	  	@log.info("Handshake from player: #{packet.chomp}")
-		@log.info("Adding player to active list.")
-		@server.worlds[0].load_player(packet.chomp, connection)
 	  	payload =  [@packets[:handshake]]
 		payload.concat(string16 "-")
 		connection.send_data bisect(payload).pack("C*")
 	end
 	def login_request connection, packet
-	  @log.debug packet
+		unpacked = debisect(packet.unpack("ClU*"))
+		player = unpacked[3..19].pack("U*")
+		@log.info("Login: #{player} has joined the server.")
+		@server.worlds[0].load_player(player, connection)
+		payload = [@packets[:login_request]]
+		payload.concat int(1) #Ent id
+		payload.concat string16("") #Unused
+		payload.concat long @server.worlds[0].seed	#world seed
+		payload.concat int 1				#server mode (1 for creative. 0 for survival)
+		payload.concat byte 0				#dimention -1 for hell 0 for norm
+		payload.concat byte 0				#difficulty
+		payload.concat [128]				#world_height
+		payload.concat [60]					#players on server. More than 60 glitches
+	  	connection.send_data bisect(payload).pack("C*")
+	  	
+	  	#TODO: Send Pre-Chunks
+	  	send_spawn_position connection, 0, 80, 0
+	  	#TODO: Send Inventory
+	  	send_player_position_look connection, 0.0,80.0,0.0,0.0,0.0,false,67.24
+	end
+	def send_spawn_position connection, x, y, z
+		payload = [@packets[:spawn_position]]
+		payload.concat int(0) #X, Y, Z
+		payload.concat int(80) #X, Y, Z
+		payload.concat int(0) #X, Y, Z
+		send_payload connection, payload
+	end
+	def send_player_position_look connection, x, y, z, yaw, pitch, on_ground, stance
+		payload = [@packets[:player_position_look]]
+		payload.concat double x 
+		payload.concat double stance 
+		payload.concat double y
+		payload.concat double z
+		payload.concat float yaw
+		payload.concat float pitch
+		payload.concat bool on_ground
+		send_payload connection, payload
+	end
+	def send_payload connection, payload
+		connection.send_data bisect(payload).pack("C*")
 	end
 	def keep_alive connection
 	  	@last_keep_alive = rand(32767..65536)
-	  	payload = [@packet[:keep_alive],@last_keep_alive]
+	  	payload = [@packets[:keep_alive]]
+	  	payload.concat int @last_keep_alive
 	  	connection.send_data bisect(payload).pack("C*")
 	end
 	def check_keep_alive connection, packet
@@ -125,7 +164,6 @@ class BetaProtocol
 	end
 	
 	def send_kick connection, reason
-	  	@log.info("Kicking: #{connection.player.name}, Reason: #{reason}")
 	  	payload =  [@packets[:server_kick]]
 		payload.concat(string16 reason)
 		connection.send_data bisect(payload).pack("C*")
@@ -134,6 +172,33 @@ class BetaProtocol
 	def string16 message
 		payload = [message.size]
 		payload.concat(bytize(message))
+		return payload
+	end
+	def long message
+		payload = [message].pack("q").unpack("C*")
+		return payload
+	end
+	def double message
+		payload = [message].pack("d").unpack("C*")
+		return payload
+	end
+	def float message
+		payload = [message].pack("f").unpack("C*")
+		return payload
+	end
+	def bool message
+		payload = 0
+		if message==true
+			payload = 1
+		end
+		return [payload]
+	end
+	def int message
+		payload = [message].pack("l").unpack("C*")
+		return payload
+	end
+	def byte message
+		payload = [message].pack("c").unpack("C*")
 		return payload
 	end
 	def bytize message
@@ -153,6 +218,15 @@ class BetaProtocol
 			buffer.push 0
 		}
 		buffer.pop
+		return buffer
+	end
+	def debisect array
+		buffer = []
+		array.each do |item|
+			if item != 0
+				buffer.push item
+			end
+		end
 		return buffer
 	end
 end
