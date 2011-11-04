@@ -20,6 +20,6 @@ _./main.rb_
 
 Required Software
 -----------------
-__ruby 1.9__ - Linux (_sudo apt-get install ruby19_, or use RVM. 1.9 is necessary!)
+__ruby 1.9.3-p0__ - Linux (RVM recommended! __rvmsudo rvm install 1.9.3-p0; rvmsudo rvm use 1.9.3-p0 --default__)
 	gems:	
-	__eventmachine__ - (_gem install eventmachine_)
+	__eventmachine__ - (_rvmsudo rvm gem install eventmachine_)
