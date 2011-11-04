@@ -11,7 +11,6 @@ All of the server settings lie in the file _config.rb_, which is right next to m
 
 Running
 -------
-
 To start the server just run _ruby main.rb_ in the root directory.
 
 Alternatively, if you are using Li/unix, you can do this:
@@ -20,6 +19,17 @@ _./main.rb_
 
 Required Software
 -----------------
-__ruby 1.9.3-p0__ - Linux (RVM recommended! __rvmsudo rvm install 1.9.3-p0; rvmsudo rvm use 1.9.3-p0 --default__)
-	gems:	
-	__eventmachine__ - (_rvmsudo rvm gem install eventmachine_)
+__ruby 1.9.3-p0__ - See below for how to install w/ RVM.
+__eventmachine__ - See below for how to install w/ RVM.
+
+Recomended Software
+-----------------
+__rvm__ - Not required but easy to use.
+Install (Ubuntu 11.10):
+_sudo apt-get install ruby-rvm_
+To use RVM everytime you start bash you need to run:
+_source /etc/profile_
+To install ruby:
+_rvmsudo rvm install 1.9.3-p0_
+To install eventmachine:
+_rvmsudo rvm gem install eventmachine_
