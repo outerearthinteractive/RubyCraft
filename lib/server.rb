@@ -50,6 +50,9 @@ class Server
 	end
 	def stop
 		@log.info "Stopping server..."
+		@worlds.each do |world|
+			world.save_all
+		end
 		EventMachine::stop_server(@server)
 		exit 1
 	end

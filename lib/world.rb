@@ -1,4 +1,5 @@
 require "yaml"
+require "zlib"
 
 class World
 attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :difficulty
@@ -24,23 +25,36 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 		load_chunk 0,0
 		@server.log.info("Loaded world: #{@name}")
 	end
-	def save_chunk x, z
-		chunk_file = File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/#{x},#{z}.dat")
-		File.open(chunk_file, "w") do |file|
-			file.puts Marshal::dump(get_chunk_at(x,z))
+	def save_all
+		@loaded_chunks.each do |chunk|
+			save_chunk chunk
 		end
+	end
+	def save_chunk x, z
+		save_chunk get_chunk_at(x,z)
+	end
+	def save_chunk chunk
+		@server.log.info "Saving chunk #{chunk.x}, ?, #{chunk.z}. World: #{@name}"
+		chunk_file = File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/#{chunk.x},#{chunk.z}.dat")
+		File.open(chunk_file, "w") do |file|
+			d = Zlib::Deflate.deflate(Marshal::dump(chunk),9)
+			file.print d
+		end
+		@server.log.info "Chunk saved!"
 	end
 	def load_chunk x, z
 		chunk_file = File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/#{x},#{z}.dat")
 		if File.exists?(chunk_file)
 			@server.log.info "Loading chunk #{x}, ?, #{z}. World: #{name}"
-			File.open(chunk_file, "r").each do |object|
-				@loaded_chunks.push Marshal::load(object)
-			end
+			object = File.read(chunk_file)
+			@loaded_chunks.push Marshal::load(Zlib::Inflate.inflate(object))
+			@server.log.info "Chunk loaded!"
 		else
 			@server.log.info "Generating chunk #{x}, ?, #{z}. World: #{name}"
-			@loaded_chunks.push @server.terrain_generator.generate_chunk(self,x,y)
+			chunk = @server.terrain_generator.generate_chunk(self,x,z)
+			@loaded_chunks.push chunk
 			@server.log.info "Chunk generated!"
+			save_chunk chunk
 		end
 	end
 	def get_chunk_at x, z
