@@ -14,19 +14,21 @@ class Server
 	@plugin_path
 	@configuration
 	def initialize
+		@version = "v0.1-alpha"
 		@log = RubycraftLogger.new("RubyCraft")
-		@log.info("Initialized")
+		@log.info("RubyCraft #{@version}. Initializing...")
 		if !File.exists?(File.join(File.dirname(__FILE__),"../world"))
 			@log.info "Creating non-existant world directory."
 			Dir.mkdir(File.join(File.dirname(__FILE__),"../world"))
 		end
 		@configuration = Configuration.new
-		@connections = []
-		@protocol = ProtocolHandler.new self
-		@players = {}
 		if @configuration.max_players == -1
 			@configuration.max_players = 2147483647
 		end
+		@log.log.level = @configuration.log_level
+		@connections = []
+		@protocol = ProtocolHandler.new self
+		@players = {}
 		@terrain_generator = GeneratorHandeler.new(self)
 		@worlds=[]
 		@configuration.worlds.each do |world|

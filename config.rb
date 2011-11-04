@@ -34,7 +34,7 @@
 #	@worlds = []
 #	@worlds.push WorldConfig.new( "boring_world1", 15, [FlatgrassGenerator] )
 class Configuration
-  attr_accessor :interface, :port, :max_players, :description, :motd, :minversion, :maxversion, :protocols, :authenticate, :worlds, :default_world
+  attr_accessor :interface, :port, :max_players, :description, :motd, :minversion, :maxversion, :protocols, :authenticate, :worlds, :default_world, :log_level
   def initialize
     @interface = "0.0.0.0"
     @port = 25565
@@ -48,6 +48,7 @@ class Configuration
     @default_world = "world1"
     @worlds = []
     @worlds.push WorldConfig.new( "world1", 15, [FlatgrassGenerator] )
+    @log_level = Logger::DEBUG
   end
 end
 

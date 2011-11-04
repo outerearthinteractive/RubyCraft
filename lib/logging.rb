@@ -9,7 +9,8 @@ class RubycraftLogger
 		log.level = Logger::DEBUG
 		log.datetime_format = "%Y-%m-%d %H:%M:%S"
 		log.formatter = proc { |severity, datetime, progname, msg|
-			"[#{self.tag}] #{datetime}: #{msg}\n"
+			datetime = datetime.strftime("%Y-%m-%d %H:%M:%S")
+			"[#{self.tag}:#{severity}] #{datetime}: #{msg}\n"
 		}
 		log.info("Logger initialized")
 	end
