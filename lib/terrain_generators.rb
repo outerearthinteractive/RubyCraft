@@ -1,4 +1,4 @@
-Dir.glob(File.dirname(__FILE__) + '/generator/*.rb') {|file| require file}
+Dir.glob(File.join(File.dirname(__FILE__),'./generator/*.rb')) {|file| require file}
 
 class GeneratorHandeler
 	def initialize server
@@ -10,7 +10,7 @@ class GeneratorHandeler
 		chunk = Chunk.new @server, world, x, z
 		generators = world.config.generators
 		generators.each do |generator|
-			generator.generate_chunk(chunk, world.seed, x, y)
+			generator::generate_chunk(chunk, world.seed, x, z)
 		end
 		return chunk
 	end

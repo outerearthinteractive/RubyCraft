@@ -1,8 +1,10 @@
 module FlatgrassGenerator
-	def generate_chunk(chunk, seed, x, y)
-		chunk.blocks.each do |block|
-			if block.y < 64
-				block.type = 2
+	def FlatgrassGenerator::generate_chunk(chunk, seed, x, z)
+		(0..15).each do |x|
+			(0..63).each do |y|
+				(0..15).each do |z|
+					chunk.blocks[x][y][z].type = 2
+				end
 			end
 		end
 	end

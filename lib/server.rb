@@ -16,6 +16,10 @@ class Server
 	def initialize
 		@log = RubycraftLogger.new("RubyCraft")
 		@log.info("Initialized")
+		if !File.exists?(File.join(File.dirname(__FILE__),"../world"))
+			@log.info "Creating non-existant world directory."
+			Dir.mkdir(File.join(File.dirname(__FILE__),"../world"))
+		end
 		@configuration = Configuration.new
 		@connections = []
 		@protocol = ProtocolHandler.new self
@@ -28,6 +32,7 @@ class Server
 		@configuration.worlds.each do |world|
 			@worlds<< World.new(self,world)
 		end
+		
 	end
 	def config
 		return @configuration

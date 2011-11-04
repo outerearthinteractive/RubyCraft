@@ -14,16 +14,8 @@
 #
 #
 class Block
-	attr_accessor :x, :y, :z, :type, :data
-	@x
-	@y
-	@z
-	@type
-	@data
-	def initialize x, y, z, type
-		@x = x
-		@y = y
-		@z = z
+	attr_accessor :type, :data
+	def initialize type
 		@type = type
 	end
 end

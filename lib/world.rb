@@ -14,33 +14,33 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 		@dimension = 0 #0 = Normal, -1 = Nether
 		@type = 1 #1 = creative, 0 = survival
 		@difficulty = 0
-		if File.exists?(File.join(File.dirname(__FILE__)))
-		
-			if !File.exists?(File.join(File.dirname(__FILE__),"../world/#{@name}"))
-				@server.log.info "Creating filespace for world: #{@name}"
-				Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/"))
-				Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/"))
-				Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/player/"))
-				load_chunk 0,0
-			end
+		@loaded_chunks = [] #Or Array.new
+		if !File.exists?(File.join(File.dirname(__FILE__),"../world/#{@name}"))
+			@server.log.info "Creating filespace for world: #{@name}"
+			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/"))
+			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/"))
+			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/player/"))
 		end
+		load_chunk 0,0
 		@server.log.info("Loaded world: #{@name}")
 	end
 	def save_chunk x, z
-		chunk_file = File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/#{x},#{z}.yml")
+		chunk_file = File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/#{x},#{z}.dat")
 		File.open(chunk_file, "w") do |file|
 			file.puts Marshal::dump(get_chunk_at(x,z))
 		end
 	end
 	def load_chunk x, z
-		@server.log.info "Generating chunk #{x}, ?, #{z}. World: #{name}"
-		chunk_file = File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/#{x},#{z}.yml")
+		chunk_file = File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/#{x},#{z}.dat")
 		if File.exists?(chunk_file)
+			@server.log.info "Loading chunk #{x}, ?, #{z}. World: #{name}"
 			File.open(chunk_file, "r").each do |object|
 				@loaded_chunks.push Marshal::load(object)
 			end
 		else
+			@server.log.info "Generating chunk #{x}, ?, #{z}. World: #{name}"
 			@loaded_chunks.push @server.terrain_generator.generate_chunk(self,x,y)
+			@server.log.info "Chunk generated!"
 		end
 	end
 	def get_chunk_at x, z
