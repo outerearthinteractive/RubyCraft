@@ -110,15 +110,18 @@ class BetaProtocol
 		unpacked = debisect(packet.unpack("ClU*"))
 		player_name = unpacked[3..19].pack("U*")
 		@log.info("Login: #{player_name} has joined the server.")
+		@log.debug("Selecting default world...")
 		world_select = @server.worlds[0]
 		@server.worlds.each do |world|
 			if world.name == @config.default_world
 				world_select = world
 			end
 		end
+		@log.debug("Default world is #{world_select.name}")
 		player = world_select.load_player(player_name, connection)
 		payload = [@packets[:login_request]]
-		payload.concat int(player.id) #Ent id
+		@log.debug("Player ID: #{int(player.id)}")
+		payload.concat int(player.id)
 		payload.concat string16("test") #Unused
 		payload.concat long world_select.seed	#world seed
 		payload.concat int world_select.type		#server mode (1 for creative. 0 for survival)
@@ -130,7 +133,9 @@ class BetaProtocol
 			max_players = 60
 		end
 		payload.concat [max_players]					#Max players on server. More than 60 glitches
-	  	connection.send_data bisect(payload).pack("C*")
+	  	@log.debug("Packet: #{payload}")
+		@log.debug("Bisect: #{bisect(payload)}")
+		connection.send_data bisect(payload).pack("C*")
 	  	EventMachine::Timer.new(5.0) do
 	  		@log.debug("pre_chunk timer!")
 	  		send_pre_chunk connection, 0, 0, true
@@ -193,6 +198,8 @@ class BetaProtocol
 	def send_kick connection, reason
 	  	payload =  [@packets[:server_kick]]
 		payload.concat(string16 reason)
+		@log.debug("Packet: #{payload}")
+		@log.debug("Bisect: #{bisect payload}")
 		connection.send_data bisect(payload).pack("C*")
 	end
 	
