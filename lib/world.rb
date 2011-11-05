@@ -85,5 +85,6 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 		end
 		player.connection = connection
 		@players[name]=player
+		return player
 	end
 end

@@ -108,21 +108,21 @@ class BetaProtocol
 	end
 	def login_request connection, packet
 		unpacked = debisect(packet.unpack("ClU*"))
-		player = @players[unpacked[3..19].pack("U*")]
-		@log.info("Login: #{player} has joined the server.")
+		player_name = unpacked[3..19].pack("U*")
+		@log.info("Login: #{player_name} has joined the server.")
 		world_select = @server.worlds[0]
 		@server.worlds.each do |world|
 			if world.name == @config.default_world
 				world_select = world
 			end
 		end
-		world_select.load_player(player, connection)
+		player = world_select.load_player(player_name, connection)
 		payload = [@packets[:login_request]]
 		payload.concat int(player.id) #Ent id
-		payload.concat string16("") #Unused
+		payload.concat string16("test") #Unused
 		payload.concat long world_select.seed	#world seed
 		payload.concat int world_select.type		#server mode (1 for creative. 0 for survival)
-		payload.concat byte world_select.dimention		#dimention -1 for hell 0 for norm
+		payload.concat byte world_select.dimension		#dimention -1 for hell 0 for norm
 		payload.concat byte world_select.difficulty				#difficulty
 		payload.concat [world_select.height]				#world_height
 		max_players = @config.max_players
@@ -131,17 +131,27 @@ class BetaProtocol
 		end
 		payload.concat [max_players]					#Max players on server. More than 60 glitches
 	  	connection.send_data bisect(payload).pack("C*")
-	  	
+	  	EventMachine::Timer.new(5.0) do
+	  		@log.debug("pre_chunk timer!")
+	  		send_pre_chunk connection, 0, 0, true
+	  	end
 	  	#TODO: Send Pre-Chunks
-	  	EventMachine::Timer.new(0.2) do
+	  	EventMachine::Timer.new(10.0) do
 	  		@log.debug("spawn_pos timer!")
 	  		send_spawn_position connection, 0, 80, 0
 	  	end
 	  	#TODO: Send Inventory
-	  	EventMachine::Timer.new(0.4) do
+	  	EventMachine::Timer.new(15.0) do
 	  		@log.debug("player_pos timer!")
 	  		send_player_position_look connection, 0.0,80.0,0.0,0.0,0.0,false,67.24
 	  	end
+	end
+	def send_pre_chunk connection, x, z, mode
+		payload = [@packets[:spawn_position]]
+		payload.concat int(x) #X, Y, Z
+		payload.concat int(z) #X, Y, Z
+		payload.concat bool(mode) #X, Y, Z
+		send_payload connection, payload
 	end
 	def send_spawn_position connection, x, y, z
 		payload = [@packets[:spawn_position]]
