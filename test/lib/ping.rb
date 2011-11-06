@@ -1,8 +1,10 @@
 class Ping < ProtocolTest
-  def initialize socket, test="PingTest", *args
+  @delim = "\xA7".force_encoding("UTF-16")
+  def initialize socket, log, test="PingTest", *args
     super
   end
   def test
-    super
+    @log.debug @delim
+    return true;
   end
 end

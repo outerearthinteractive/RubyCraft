@@ -1,12 +1,15 @@
 class ProtocolTest
   @socket
   @test
-  def initialize socket, test = "BasicProtocolTest"
+  @log
+  def initialize socket, log, test = "BasicProtocolTest"
     @socket = socket
     @test = test
+    @log = log
   end
   def test
-    puts "Running '#{@test}' on #{@socket.inspect}"
+    log.info "Running '#{@test}' on #{@socket.inspect}"
     raise NoTestBodyException.new("Test '#{@test}' is a stub. Try implementing some test methods.")
+    return false;
   end
 end

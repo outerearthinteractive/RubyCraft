@@ -5,7 +5,19 @@ require 'packets'
 require 'exceptions'
 require 'test_base'
 require 'ping'
+require 'logger'
 
+# Logger Initialization
+tag = "RC Test"
+log = Logger.new($stdout)
+log.level = Logger::DEBUG
+log.datetime_format = "%Y-%m-%d %H:%M:%S"
+log.formatter = proc { |severity, datetime, progname, msg|
+  datetime = datetime.strftime("%Y-%m-%d %H:%M:%S")
+  "[#{tag}:#{severity}] #{datetime}: #{msg}\n"
+}
+log.info("Logger initialized")
+# =====================
 
 results = []
 routine_list = [Ping]
@@ -15,20 +27,20 @@ hosts.each do |host|
   begin
     sock = TCPSocket.new(host.host, host.port)
     begin
-    routine_list.each {|routine|
-      r = routine.new(sock)
-      r.test
-      r = nil
+      routine_list.each {|routine|
+        r = routine.new(sock, log)
+        r.test
+        r = nil
       }
     rescue NoTestBodyException => ex
-      puts ex.message
+      log.warn ex.message
     end
   rescue Errno::ECONNREFUSED
-    puts "Connection refused for #{host.to_s}"
+    log.error "Connection refused for #{host.to_s}"
   else
-    puts "No show-stopping errors for #{host.to_s}"
+    log.info "No show-stopping errors for #{host.to_s}"
   ensure
-    puts "Closing socket, just in case."
+    log.debug "Closing socket, just in case."
     sock.close unless sock.nil?
   end
 end
