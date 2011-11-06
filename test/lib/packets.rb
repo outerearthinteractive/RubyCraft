@@ -1,5 +1,5 @@
-module Packet
-  def Packet.list
+module BetaPacket
+  def BetaPacket.list
     {
       :keep_alive        => 0,
       :login_request      => 1,
@@ -70,28 +70,28 @@ module Packet
     }
   end
 
-  def Packet.string16 message
+  def BetaPacket.string16 message
     payload = [message.size]
     payload.concat(bytize(message))
     return payload
   end
 
-  def Packet.long message
+  def BetaPacket.long message
     payload = [message].pack("q").unpack("C*")
     return payload
   end
 
-  def Packet.double message
+  def BetaPacket.double message
     payload = [message].pack("d").unpack("C*")
     return payload
   end
 
-  def Packet.float message
+  def BetaPacket.float message
     payload = [message].pack("f").unpack("C*")
     return payload
   end
 
-  def Packet.bool message
+  def BetaPacket.bool message
     payload = 0
     if message==true
       payload = 1
@@ -99,20 +99,20 @@ module Packet
     return [payload]
   end
 
-  def Packet.int message
+  def BetaPacket.int message
     payload = [message].pack("l").unpack("C*")
     return payload
   end
-  def Packet.short message
+  def BetaPacket.short message
     payload = [message].pack("S_").unpack("C*")
     return payload
   end
-  def Packet.byte message
+  def BetaPacket.byte message
     payload = [message].pack("c").unpack("C*")
     return payload
   end
 
-  def Packet.bytize message
+  def BetaPacket.bytize message
     message_bytes = []
     message.each_byte do
       |b| message_bytes.push(b)
@@ -120,7 +120,7 @@ module Packet
     return message_bytes
   end
 
-  def Packet.bisect array #Epic hack to fake utf16
+  def BetaPacket.bisect array #Epic hack to fake utf16
     buffer = []
     array.each { |item|
       buffer.push item
@@ -130,7 +130,7 @@ module Packet
     return buffer
   end
 
-  def Packet.debisect array
+  def BetaPacket.debisect array
     buffer = []
     array.each do |item|
       if item != 0
