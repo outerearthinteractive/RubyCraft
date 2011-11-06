@@ -1,6 +1,3 @@
-require 'eventmachine'
-require(File.join(File.dirname(__FILE__), "logging.rb"))
-
 class Connection < EventMachine::Connection
 	attr_accessor :server, :log
 	@server

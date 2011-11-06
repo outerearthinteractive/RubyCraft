@@ -1,5 +1,3 @@
-#require("block.rb")
-
 class Chunk
 attr_accessor :blocks, :x, :z
 	def initialize server, world, x, z

@@ -1,6 +1,3 @@
-require "yaml"
-require "zlib"
-
 class World
 attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :difficulty
 @server

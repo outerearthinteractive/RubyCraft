@@ -1,5 +1,3 @@
-Dir.glob(File.join(File.dirname(__FILE__),'./generator/*.rb')) {|file| require file}
-
 class GeneratorHandeler
 	def initialize server
 		@server = server

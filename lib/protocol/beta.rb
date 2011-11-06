@@ -1,4 +1,3 @@
-
 class BetaProtocol
 	def init_packets
 	@players

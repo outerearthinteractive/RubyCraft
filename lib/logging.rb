@@ -1,4 +1,3 @@
-require 'logger'
 class RubycraftLogger
 	attr_accessor :log, :tag
 	def initialize(tag)

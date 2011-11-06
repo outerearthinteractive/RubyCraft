@@ -1,4 +1,3 @@
-
 class WorldConfig
 	attr_accessor :name, :seed, :generators
 	def initialize name, seed, generators

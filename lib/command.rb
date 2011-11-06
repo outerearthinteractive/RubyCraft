@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'eventmachine'
-
 class CommandHandler < EventMachine::Connection
 	include EventMachine::Protocols::LineText2
 	attr_accessor :server

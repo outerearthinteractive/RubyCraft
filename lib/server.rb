@@ -1,12 +1,5 @@
 # Base class for EVERYTHING.
-require(File.join(File.dirname(__FILE__), "logging.rb"))
-require(File.join(File.dirname(__FILE__), "network.rb"))
-require(File.join(File.dirname(__FILE__), "command.rb"))
-require(File.join(File.dirname(__FILE__), "terrain_generators.rb"))
-require(File.join(File.dirname(__FILE__), "../config.rb"))
-require 'rubygems'
-require 'eventmachine'
-require(File.join(File.dirname(__FILE__), "protocol.rb"))
+
 class Server
 	attr_accessor :connections, :protocol, :log, :players, :worlds, :terrain_generator
 	@plugins

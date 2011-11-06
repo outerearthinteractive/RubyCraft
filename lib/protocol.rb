@@ -1,5 +1,3 @@
-Dir.glob(File.dirname(__FILE__) + '/protocol/*.rb') {|file| require file}
-
 class ProtocolHandler
 	def initialize server
 		@server = server
