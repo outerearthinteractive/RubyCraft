@@ -54,10 +54,14 @@ class Type < ProtocolTest
     end
 
     def test_properly_mc_encoded orig, result
-      @log.debug "= Testing for two-way compatibility                           ="
+      @log.debug "= Testing for two-way length compatibility                    ="
       @log.debug "Length of original: #{orig.size}"
       @log.debug "Length of converted: #{BetaPacket.string16len(result)}"
       @log.debug "Equal length? #{orig.size == BetaPacket.string16len(result)}"
+      @log.debug "= Testing for two-way content compatibility                   ="
+      @log.debug "Original: #{orig.encode("UTF-8")}"
+      @log.debug "New: #{result[2..(orig.size)].pack("c*")}"
+      @log.debug "New in Array form: #{result[2,(orig.size)]}"
     end
   end
 end
