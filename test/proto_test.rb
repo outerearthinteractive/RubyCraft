@@ -6,6 +6,7 @@ require 'exceptions'
 require 'test_base'
 require 'ping'
 require 'logger'
+require 'type'
 
 # Logger Initialization
 tag = "RC Test"
@@ -20,12 +21,13 @@ log.info("Logger initialized")
 # =====================
 
 results = []
-routine_list = [Ping]
+routine_list = [Ping, Type]
 routine_hold = []
 hosts = [Host.new("127.0.0.1", 25565), Host.new("outerearth.net", 25565)]
 hosts.each do |host|
   begin
     sock = TCPSocket.new(host.host, host.port)
+    log.info ("Running tests against #{host.to_s}")
     begin
       routine_list.each {|routine|
         r = routine.new(sock, log)
@@ -44,5 +46,5 @@ hosts.each do |host|
     sock.close unless sock.nil?
   end
 end
-puts Packets::list
+
 

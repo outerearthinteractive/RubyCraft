@@ -1,5 +1,5 @@
-module Packets
-  def list
+module Packet
+  def Packet.list
     {
       :keep_alive        => 0,
       :login_request      => 1,
@@ -68,5 +68,75 @@ module Packets
       :server_list_ping   => 254,
       :server_kick      => 255
     }
+  end
+
+  def Packet.string16 message
+    payload = [message.size]
+    payload.concat(bytize(message))
+    return payload
+  end
+
+  def Packet.long message
+    payload = [message].pack("q").unpack("C*")
+    return payload
+  end
+
+  def Packet.double message
+    payload = [message].pack("d").unpack("C*")
+    return payload
+  end
+
+  def Packet.float message
+    payload = [message].pack("f").unpack("C*")
+    return payload
+  end
+
+  def Packet.bool message
+    payload = 0
+    if message==true
+      payload = 1
+    end
+    return [payload]
+  end
+
+  def Packet.int message
+    payload = [message].pack("l").unpack("C*")
+    return payload
+  end
+  def Packet.short message
+    payload = [message].pack("S_").unpack("C*")
+    return payload
+  end
+  def Packet.byte message
+    payload = [message].pack("c").unpack("C*")
+    return payload
+  end
+
+  def Packet.bytize message
+    message_bytes = []
+    message.each_byte do
+      |b| message_bytes.push(b)
+    end
+    return message_bytes
+  end
+
+  def Packet.bisect array #Epic hack to fake utf16
+    buffer = []
+    array.each { |item|
+      buffer.push item
+      buffer.push 0
+    }
+    buffer.pop
+    return buffer
+  end
+
+  def Packet.debisect array
+    buffer = []
+    array.each do |item|
+      if item != 0
+        buffer.push item
+      end
+    end
+    return buffer
   end
 end
