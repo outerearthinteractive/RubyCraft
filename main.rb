@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
+
 $LOAD_PATH.unshift( File.join( File.dirname(__FILE__), 'lib' ) )
-# This file runs everything.
+
+# This file includes everything, and then runs the server.
+# Every class that is added should be required here and not elsewhere.
+
 require 'logger'
 require "yaml"
 require "zlib"
