@@ -71,7 +71,7 @@ module BetaPacket
   end
 
   def BetaPacket.string16 message
-    payload = [message.size]
+    payload = BetaPacket.short(message.size)
     payload.concat(bytize(message))
     return payload
   end
@@ -118,6 +118,10 @@ module BetaPacket
       |b| message_bytes.push(b)
     end
     return message_bytes
+  end
+  
+  def BetaPacket.string16len message
+    message[0..1].pack("C*").unpack("S_")[0]
   end
 
   def BetaPacket.bisect array #Epic hack to fake utf16
