@@ -23,6 +23,7 @@ require 'network'
 require 'command'
 require 'terrain_generators'
 require 'generator/flatgrass'
+require 'packets'
 Dir.glob(File.dirname(__FILE__) + '/config.rb') {|file| require file}
 
 
