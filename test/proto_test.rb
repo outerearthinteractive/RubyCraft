@@ -21,7 +21,8 @@ log.info("Logger initialized")
 # =====================
 
 results = []
-routine_list = [Ping, Type]
+routine_list = [Ping]
+# Available tests = Ping, Type
 routine_hold = []
 hosts = [Host.new("127.0.0.1", 25565), Host.new("outerearth.net", 25565)]
 hosts.each do |host|
