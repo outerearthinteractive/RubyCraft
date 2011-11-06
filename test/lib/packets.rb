@@ -103,10 +103,12 @@ module BetaPacket
     payload = [message].pack("l").unpack("C*")
     return payload
   end
+
   def BetaPacket.short message
     payload = [message].pack("S_").unpack("C*")
     return payload
   end
+
   def BetaPacket.byte message
     payload = [message].pack("c").unpack("C*")
     return payload
@@ -116,10 +118,11 @@ module BetaPacket
     message_bytes = []
     message.each_byte do
       |b| message_bytes.push(b)
+          message_bytes.push(0)
     end
     return message_bytes
   end
-  
+
   def BetaPacket.string16len message
     message[0..1].pack("C*").unpack("S_")[0]
   end
@@ -142,5 +145,9 @@ module BetaPacket
       end
     end
     return buffer
+  end
+
+  def utfize string
+    return string.force_encoding("UTF-16")
   end
 end

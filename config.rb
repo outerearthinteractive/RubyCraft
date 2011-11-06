@@ -38,8 +38,8 @@ class Configuration
   def initialize
     @interface = "0.0.0.0"
     @port = 25565
-    @max_players = -1
-    @description = "RubyCraft Test Server!"
+    @max_players = 20
+    @description = "OEI 1.9p4 Interim Server"
     @motd = "Welcome to the server!"
     @minversion = 0
     @maxversion = 9001

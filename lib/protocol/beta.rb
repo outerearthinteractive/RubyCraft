@@ -132,18 +132,17 @@ class BetaProtocol
 
   def server_list_ping connection, packet
     @log.debug "Got ping connection"
-    message = BetaPacket.string16(@config.description.force_encoding("UTF-16") +
-    @delim + @server.players.size.to_s.force_encoding("UTF-16") +
-    @delim + @config.max_players.to_s.force_encoding("UTF-16"))
-    #message = BetaPacket.bytize.pack(@config.description).bytize + @delim + BetaPacket.bytize(@server.players.length.to_s) + @delim + BetaPacket.bytize(@config.max_players.to_s)
-    send_kick connection, message
+    #Always returns 0 players online.
+    message = BetaPacket.utfize(@config.description) + @delim + BetaPacket.utfize(@server.players.size.to_s) + @delim + BetaPacket.utfize(@config.max_players.to_s)
+    payload =  [@packets[:server_kick]]
+    payload.concat(BetaPacket.string16 message)
+    connection.send_data (payload).pack("S_C*")
   end
 
   def send_kick connection, reason
+    @log.info("Kicking: #{connection.player.name}, Reason: #{reason}")
     payload =  [@packets[:server_kick]]
-    payload.concat reason
-    @log.debug("Packet: #{payload}")
-    @log.debug("Packed: #{payload.pack("IS_C*").unpack("C*")}")
-    connection.send_data payload.pack("IS_C*")
+    payload.concat(BetaPacket.string16 reason)
+    connection.send_data BetaPacket.bisect(payload).pack("C*")
   end
 end
