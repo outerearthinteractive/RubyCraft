@@ -36,9 +36,11 @@ class BetaProtocol
   end
 
   def handshake connection, packet
+    @log.info "Recieved handshake. Packet: #{packet}"
     payload =  [@packets[:handshake]]
     payload.concat(BetaPacket.string16 "-")
-    connection.send_data BetaPacket.bisect(payload).pack("C*")
+    @log.info "Responding with #{(payload).pack("CS_*")} (#{(payload)})"
+    connection.send_data (payload).pack("CS_*")
   end
 
   def login_request connection, packet
