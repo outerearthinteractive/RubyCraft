@@ -29,22 +29,24 @@ class BetaProtocol
     when @packets[:handshake]
       handshake connection, packet
     else
-      @log.info("TODO: Implement #{packet_id}")
-      send_kick connection, "TODO: Implement #{packet_id}"
+      @log.debug("TODO: Implement #{packet_id}. Ignoring!")
     end
 
   end
 
   def handshake connection, packet
-    @log.info "Recieved handshake. Packet: #{packet}"
+  	unpacked = packet.unpack("C*")
+  	@log.debug "Recived Packet: #{unpacked}"
+    @log.debug "Recieved handshake. Packet: #{packet}"
     payload =  [@packets[:handshake]]
     payload.concat(BetaPacket.string16 "-")
-    @log.info "Responding with #{(payload).pack("CS_*")} (#{(payload)})"
-    connection.send_data (payload).pack("CS_*")
+    packed = (payload).pack("S_C*")
+    @log.debug "Responding with #{packed} (#{(payload)})"
+    connection.send_data packed
   end
 
   def login_request connection, packet
-    unpacked = deBetaPacket.bisect(packet.unpack("ClU*"))
+    unpacked = packet.unpack("ClU*")
     player_name = unpacked[3..19].pack("U*")
     @log.info("Login: #{player_name} has joined the server.")
     @log.debug("Selecting default world...")
@@ -138,6 +140,7 @@ class BetaProtocol
     message = BetaPacket.utfize(@config.description) + @delim + BetaPacket.utfize(@server.players.size.to_s) + @delim + BetaPacket.utfize(@config.max_players.to_s)
     payload =  [@packets[:server_kick]]
     payload.concat(BetaPacket.string16 message)
+    @log.debug "Ping: #{payload}"
     connection.send_data (payload).pack("S_C*")
   end
 
