@@ -18,15 +18,15 @@ require 'world'
 require 'player'
 require 'chunk'
 require 'protocol'
-require 'protocol/beta'
 require 'network'
 require 'command'
 require 'terrain_generators'
-require 'generator/flatgrass'
-require 'packets'
 Dir.glob(File.dirname(__FILE__) + '/config.rb') {|file| require file}
 
-
+# Dynamically Loaded Classes
+Dir.glob(File.dirname(__FILE__) + '/lib/protocol/*.rb') {|file| require file}
+Dir.glob(File.dirname(__FILE__) + '/lib/protocol/*/*.rb') {|file| require file}
+Dir.glob(File.dirname(__FILE__) + '/lib/generator/*.rb') {|file| require file}
 
 EventMachine::run {
 	s = Server.new
