@@ -1,7 +1,7 @@
 # Base class for EVERYTHING.
 
 class Server
-	attr_accessor :connections, :protocol, :log, :players, :worlds, :terrain_generator
+	attr_accessor :version, :connections, :protocol, :log, :players, :worlds, :terrain_generator
 	@plugins
 	@lib_path
 	@plugin_path
@@ -14,7 +14,7 @@ class Server
 			@log.info "Creating non-existant world directory."
 			Dir.mkdir(File.join(File.dirname(__FILE__),"../world"))
 		end
-		@configuration = Configuration.new
+		@configuration = Configuration.new self
 		if @configuration.max_players == -1
 			@configuration.max_players = 2147483647
 		end

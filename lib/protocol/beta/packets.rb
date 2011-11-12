@@ -77,17 +77,17 @@ module BetaPacket
   end
 
   def BetaPacket.long message
-    payload = [message].pack("q").unpack("C*")
+    payload = bisect [message].pack("q").unpack("C*")
     return payload
   end
 
   def BetaPacket.double message
-    payload = [message].pack("d").unpack("C*")
+    payload = bisect [message].pack("d").unpack("C*")
     return payload
   end
 
   def BetaPacket.float message
-    payload = [message].pack("f").unpack("C*")
+    payload = bisect [message].pack("f").unpack("C*")
     return payload
   end
 
@@ -96,11 +96,11 @@ module BetaPacket
     if message==true
       payload = 1
     end
-    return [payload]
+    return [payload, 0]
   end
 
   def BetaPacket.int message
-    payload = [message].pack("l").unpack("C*")
+    payload = bisect [message].pack("l").unpack("C*")
     return payload
   end
 
@@ -110,7 +110,7 @@ module BetaPacket
   end
 
   def BetaPacket.byte message
-    payload = [message].pack("c").unpack("C*")
+    payload = bisect [message].pack("c").unpack("C*")
     return payload
   end
 
@@ -133,7 +133,6 @@ module BetaPacket
       buffer.push item
       buffer.push 0
     }
-    buffer.pop
     return buffer
   end
 

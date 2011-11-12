@@ -34,12 +34,12 @@
 #	@worlds = []
 #	@worlds.push WorldConfig.new( "boring_world1", 15, [FlatgrassGenerator] )
 class Configuration
-  attr_accessor :interface, :port, :max_players, :description, :motd, :minversion, :maxversion, :protocols, :authenticate, :worlds, :default_world, :log_level
-  def initialize
+ attr_accessor :interface, :port, :max_players, :description, :motd, :minversion, :maxversion, :protocols, :authenticate, :worlds, :default_world, :log_level
+  def initialize server
     @interface = "0.0.0.0"
     @port = 25565
-    @max_players = 20
-    @description = "OEI 1.9p4 Interim Server"
+    @max_players = -1
+    @description = "RubyCraft #{server.version}"
     @motd = "Welcome to the server!"
     @minversion = 0
     @maxversion = 9001
@@ -51,5 +51,3 @@ class Configuration
     @log_level = Logger::DEBUG
   end
 end
-
-require(File.join(File.dirname(__FILE__), "lib/config_utils.rb"))

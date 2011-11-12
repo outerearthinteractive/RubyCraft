@@ -19,12 +19,19 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/"))
 			Dir.mkdir(File.join(File.dirname(__FILE__),"../world/#{@name}/player/"))
 		end
-		load_chunk 0,0
+		for x in -3..3 #Load a 7x7 chunk area.
+			for z in -3..3
+				load_chunk x,z
+			end
+		end
 		@server.log.info("Loaded world: #{@name}")
 	end
 	def save_all
 		@loaded_chunks.each do |chunk|
 			save_chunk chunk
+		end
+		@players.each do |player|
+			save_player player.name
 		end
 	end
 	def save_chunk x, z
@@ -37,7 +44,6 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 			d = Zlib::Deflate.deflate(Marshal::dump(chunk),9)
 			file.print d
 		end
-		@server.log.info "Chunk saved!"
 	end
 	def load_chunk x, z
 		chunk_file = File.join(File.dirname(__FILE__),"../world/#{@name}/chunk/#{x},#{z}.dat")
@@ -45,12 +51,10 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 			@server.log.info "Loading chunk #{x}, ?, #{z}. World: #{name}"
 			object = File.read(chunk_file)
 			@loaded_chunks.push Marshal::load(Zlib::Inflate.inflate(object))
-			@server.log.info "Chunk loaded!"
 		else
 			@server.log.info "Generating chunk #{x}, ?, #{z}. World: #{name}"
 			chunk = @server.terrain_generator.generate_chunk(self,x,z)
 			@loaded_chunks.push chunk
-			@server.log.info "Chunk generated!"
 			save_chunk chunk
 		end
 	end
@@ -63,12 +67,17 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 		return nil
 	end
 	def save_player name
-		player_file = File.join(File.dirname(__FILE__),"../world/#{@name}/player/#{name}.yml")
+		save_playerp @players[name]
+	end
+	def save_playerp player
+		@server.log.info "Saving player #{player.name}. World: #{@name}"
+		player_file = File.join(File.dirname(__FILE__),"../world/#{@name}/player/#{player.name}.yml")
 		File.open(player_file, "w") do |file|
-			file.puts YAML::dump(@players[name])
+			file.print YAML::dump(player)
 		end
 	end
 	def remove_player name
+		@server.log.info "Removing player #{name}. World: #{@name}"
 		@players[name].delete
 	end
 	def load_player name, connection
@@ -81,6 +90,8 @@ attr_accessor :config, :name, :players, :seed, :height, :type, :dimension, :diff
 			player = Player.new(name)
 		end
 		player.connection = connection
+		player.world = self
+		connection.player = player
 		@players[name]=player
 		return player
 	end

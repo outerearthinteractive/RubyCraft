@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-$LOAD_PATH.unshift( File.join( File.dirname(__FILE__), 'lib' ) )
+#$LOAD_PATH.unshift( File.join( File.dirname(__FILE__), 'lib' ) )
+$LOAD_PATH.unshift( File.dirname(__FILE__) )
 
 # This file includes everything, and then runs the server.
 # Every class that is added should be required here and not elsewhere.
@@ -10,18 +11,20 @@ require "yaml"
 require "zlib"
 require 'rubygems'
 require 'eventmachine'
-require 'server'
-require 'logging'
-require 'multio'
-require 'block'
-require 'world'
-require 'player'
-require 'chunk'
-require 'protocol'
-require 'network'
-require 'command'
-require 'terrain_generators'
-Dir.glob(File.dirname(__FILE__) + '/config.rb') {|file| require file}
+require 'lib/server'
+require 'lib/logging'
+require 'lib/multio'
+require 'lib/block'
+require 'lib/world'
+require 'lib/player'
+require 'lib/chunk'
+require 'lib/protocol'
+require 'lib/network'
+require 'lib/command'
+require 'lib/terrain_generators'
+require 'lib/inventory'
+require 'config'
+require 'lib/config_utils'
 
 # Dynamically Loaded Classes
 Dir.glob(File.dirname(__FILE__) + '/lib/protocol/*.rb') {|file| require file}

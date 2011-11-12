@@ -53,7 +53,7 @@ class BetaProtocol
   			unpacked_name.push byte
   		end
   	end
-    player_name = unpacked_name.pack("C*")
+    player_name = unpacked_name.pack("U*").force_encoding("UTF-8")
     @log.info("Login: #{player_name} has joined the server.")
     @log.debug("Selecting default world...")
     world_select = @server.worlds[0]
@@ -72,7 +72,7 @@ class BetaProtocol
     payload.concat BetaPacket.int world_select.type		#server mode (1 for creative. 0 for survival)
     payload.concat BetaPacket.byte world_select.dimension		#dimention -1 for hell 0 for norm
     payload.concat BetaPacket.byte world_select.difficulty				#difficulty
-    payload.concat [world_select.height,0]				#world_height
+    payload.concat [world_select.height]				#world_height
     max_players = @config.max_players
     if max_players > 60
       max_players = 60
@@ -98,7 +98,7 @@ class BetaProtocol
   end
 
   def send_pre_chunk connection, x, z, mode
-    payload = [0,@packets[:spawn_position]]
+    payload = [@packets[:spawn_position]]
     payload.concat BetaPacket.int(x) #X, Y, Z
     payload.concat BetaPacket.int(z) #X, Y, Z
     payload.concat BetaPacket.bool(mode) #X, Y, Z
@@ -106,7 +106,7 @@ class BetaProtocol
   end
 
   def send_spawn_position connection, x, y, z
-    payload = [0,@packets[:spawn_position]]
+    payload = [@packets[:spawn_position]]
     payload.concat BetaPacket.int(0) #X, Y, Z
     payload.concat BetaPacket.int(80) #X, Y, Z
     payload.concat BetaPacket.int(0) #X, Y, Z
@@ -114,7 +114,7 @@ class BetaProtocol
   end
 
   def send_player_position_look connection, x, y, z, yaw, pitch, on_ground, stance
-    payload = [0,@packets[:player_position_look]]
+    payload = [@packets[:player_position_look]]
     payload.concat BetaPacket.double x
     payload.concat BetaPacket.double stance
     payload.concat BetaPacket.double y
