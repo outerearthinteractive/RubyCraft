@@ -36,18 +36,24 @@ class BetaProtocol
 
   def handshake connection, packet
   	unpacked = packet.unpack("C*")
-  	@log.debug "Recived Packet: #{unpacked}"
     @log.debug "Recieved handshake. Packet: #{packet}"
-    payload =  [@packets[:handshake]]
+    payload =  [@packets[:handshake],0]
     payload.concat(BetaPacket.string16 "-")
-    packed = (payload).pack("S_C*")
+    packed = (payload).pack("C*")
     @log.debug "Responding with #{packed} (#{(payload)})"
     connection.send_data packed
   end
 
   def login_request connection, packet
-    unpacked = packet.unpack("ClU*")
-    player_name = unpacked[3..19].pack("U*")
+    unpacked = packet.unpack("C*")
+  	s_length = unpacked[6]*2
+  	unpacked_name = []
+  	unpacked[8..7+s_length].each do |byte|
+  		if byte!=0
+  			unpacked_name.push byte
+  		end
+  	end
+    player_name = unpacked_name.pack("C*")
     @log.info("Login: #{player_name} has joined the server.")
     @log.debug("Selecting default world...")
     world_select = @server.worlds[0]
@@ -58,41 +64,41 @@ class BetaProtocol
     end
     @log.debug("Default world is #{world_select.name}")
     player = world_select.load_player(player_name, connection)
-    payload = [@packets[:login_request]]
-    @log.debug("Player ID: #{int(player.id)}")
+    payload = [@packets[:login_request],0]
+    @log.debug("Player ID: #{BetaPacket.int(player.id)}")
     payload.concat BetaPacket.int(player.id)
     payload.concat BetaPacket.string16("test") #Unused
     payload.concat BetaPacket.long world_select.seed	#world seed
     payload.concat BetaPacket.int world_select.type		#server mode (1 for creative. 0 for survival)
     payload.concat BetaPacket.byte world_select.dimension		#dimention -1 for hell 0 for norm
     payload.concat BetaPacket.byte world_select.difficulty				#difficulty
-    payload.concat [world_select.height]				#world_height
+    payload.concat [world_select.height,0]				#world_height
     max_players = @config.max_players
     if max_players > 60
       max_players = 60
     end
     payload.concat [max_players]					#Max players on server. More than 60 glitches
     @log.debug("Packet: #{payload}")
-    @log.debug("BetaPacket.bisect: #{BetaPacket.bisect(payload)}")
-    connection.send_data BetaPacket.bisect(payload).pack("C*")
-    EventMachine::Timer.new(5.0) do
+    #@log.debug("BetaPacket.bisect: #{BetaPacket.bisect(payload)}")
+    connection.send_data (payload).pack("S_C*")
+    EventMachine::Timer.new(2.0) do
       @log.debug("pre_chunk timer!")
       send_pre_chunk connection, 0, 0, true
     end
     #TODO: Send Pre-Chunks
-    EventMachine::Timer.new(10.0) do
+    EventMachine::Timer.new(4.0) do
       @log.debug("spawn_pos timer!")
       send_spawn_position connection, 0, 80, 0
     end
     #TODO: Send Inventory
-    EventMachine::Timer.new(15.0) do
+    EventMachine::Timer.new(6.0) do
       @log.debug("player_pos timer!")
       send_player_position_look connection, 0.0,80.0,0.0,0.0,0.0,false,67.24
     end
   end
 
   def send_pre_chunk connection, x, z, mode
-    payload = [@packets[:spawn_position]]
+    payload = [0,@packets[:spawn_position]]
     payload.concat BetaPacket.int(x) #X, Y, Z
     payload.concat BetaPacket.int(z) #X, Y, Z
     payload.concat BetaPacket.bool(mode) #X, Y, Z
@@ -100,20 +106,20 @@ class BetaProtocol
   end
 
   def send_spawn_position connection, x, y, z
-    payload = [@packets[:spawn_position]]
+    payload = [0,@packets[:spawn_position]]
     payload.concat BetaPacket.int(0) #X, Y, Z
     payload.concat BetaPacket.int(80) #X, Y, Z
-    payload.concat BetaPAcket.int(0) #X, Y, Z
+    payload.concat BetaPacket.int(0) #X, Y, Z
     send_payload connection, payload
   end
 
   def send_player_position_look connection, x, y, z, yaw, pitch, on_ground, stance
-    payload = [@packets[:player_position_look]]
+    payload = [0,@packets[:player_position_look]]
     payload.concat BetaPacket.double x
     payload.concat BetaPacket.double stance
     payload.concat BetaPacket.double y
     payload.concat BetaPacket.double z
-    payload.concat BetaPaccket.float yaw
+    payload.concat BetaPacket.float yaw
     payload.concat BetaPacket.float pitch
     payload.concat BetaPacket.bool on_ground
     send_payload connection, payload
@@ -140,7 +146,6 @@ class BetaProtocol
     message = BetaPacket.utfize(@config.description) + @delim + BetaPacket.utfize(@server.players.size.to_s) + @delim + BetaPacket.utfize(@config.max_players.to_s)
     payload =  [@packets[:server_kick]]
     payload.concat(BetaPacket.string16 message)
-    @log.debug "Ping: #{payload}"
     connection.send_data (payload).pack("S_C*")
   end
 
