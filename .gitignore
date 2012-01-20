@@ -4,3 +4,8 @@ log.txt
 log.*
 .project
 .dat
+*.log
+world/*
+doc/*
+.buildpath
+.project

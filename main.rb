@@ -128,9 +128,10 @@ log = RubyCraft::Log.new($LOG_PREFIX,
 # Run the bootstrap
 RubyCraft::Loader.new(log).init
 
+# Check if the Server class was properly loaded. Die if it isn't.
 if(defined?(RubyCraft::Server) == "constant")
   EventMachine::run do
-	  s = RubyCraft::Server.new
+	  s = RubyCraft::Server.new(log)
 	  s.start
   end
 else
