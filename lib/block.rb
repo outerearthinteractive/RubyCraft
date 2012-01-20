@@ -13,6 +13,7 @@
 #
 #
 #
+
 class Block
 	attr_accessor :type, :data
 	def initialize type
