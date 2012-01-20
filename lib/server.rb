@@ -13,14 +13,9 @@ module RubyCraft
 	  ##
 	  # Initializes the server.
 	  # :args: log, the given RubyCraft::Log object to be used for logging.
-	  def initialize log
-	    if(defined?(RubyCraft::ConfigManager) == "constant")
-	      log.info "Loading ConfigManager"
-	      @cfg = RubyCraft::YAMLConfig.new()
-	    else
-	      log.info "Loading DefaultConfig (Error loading YAMLConfig module)"
-	      @cfg = RubyCraft::DefaultConfig.new()
-	    end
+	  def initialize log, cfg
+	    log.info "Loading Configuration with ConfigAdapter: #{cfg.class.to_s}"
+	    @cfg = cfg
 		  @version = "v0.1-alpha"
 		  @log = log
 		  @log.info("RubyCraft #{@version}. Initializing...")

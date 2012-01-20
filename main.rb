@@ -130,10 +130,18 @@ RubyCraft::Loader.new(log).init
 
 # Check if the Server class was properly loaded. Die if it isn't.
 if(defined?(RubyCraft::Server) == "constant")
-  EventMachine::run do
-	  s = RubyCraft::Server.new(log)
-	  s.start
+  cfg = nil
+  if(defined?(RubyCraft::YAMLConfig) == "constant")
+    log.debug "YAMLConfig module found. Using that."
+    cfg = RubyCraft::YAMLConfig.new
+  else
+    log.debug "No other configuration methods found. Defaulting to DefaultConfig."
+    cfg = RubyCraft::DefaultConfig.new
   end
+  EventMachine::run do
+	s = RubyCraft::Server.new(log)
+	s.start
+end
 else
   log.debug "Couldn't load server module. Exiting."
   exit
