@@ -23,44 +23,23 @@ $LOG_PREFIX = "[RubyCraft]"
 # This module is the default container for all things RubyCraft.
 #
 module RubyCraft
-  ##
-  # :category: Internal Classes
-  #
-  # Class that handles multiple IO objects gracefully, allowing a Logger object
-  # to service both the console and a file seamlessly.
   class MultiIO
-    ##
-    # Puts the given list of IO objects into this wrapper class for writing to.
-    # :args: *targets, list of target IO objects
     def initialize(*targets)
        @targets = targets
     end
-    ##
-    # Calls write() method with the given arguments for each of the IO objects contained.
-    # :args: *args, arguments for the write call
     def write(*args)
       @targets.each {|t| t.write(*args)}
     end
-    ##
-    # Calls the close() method for each of the IO objects contained.
     def close
       @targets.each(&:close)
     end
   end
-  ##
-  # This class handles the bootstrapping and initialization of the
-  # RubyCraft environment.
   class Loader
     @log
-    ##
-    # Initializes the bootstrap environment.
-    # :args: log, the given top-level Logger object.
     def initialize log
       @log = log
       @log.debug("Bootstrap environment set up. Waiting for init...")
     end
-    ##
-    # Loads all of the modules from the path defined as $EXT_PATH.
     def init
       blob = Dir.glob(File.join(File.dirname(__FILE__), "#{$EXT_PATH+$EXT}"))
       files = blob.length
@@ -73,14 +52,8 @@ module RubyCraft
       end
     end
   end
-  ##
-  # Class that enables semi-unified logging capabilities.
   class Log
     attr_accessor :log, :tag
-    ##
-    # Initializes the RubyCraft::Logger object.
-    # :args: tag, the desired tag to be included with all output
-    # :args: output, the IO object to be written to. Should be a RubyCraft::MultiIO object.
     def initialize tag, output
       self.tag = tag
       self.log = Logger.new(output)
@@ -90,37 +63,23 @@ module RubyCraft
       log.formatter = proc do |severity, datetime, progname, msg|
         datetime = datetime.strftime(fmt)
         "[#{self.tag}:#{severity}@#{datetime}] #{msg}\n"
-      end
-      
+      end    
     end
-    ##
-    # Outputs a message to the Logger with log level "Debug"
-    # :args: msg, message to be written to log
     def debug msg
       self.log.debug msg
-    end
-    ##
-    # Outputs a message to the Logger with log level "Warn"
-    # :args: msg, message to be written to log
+    endg
     def warn msg
       self.log.warn msg
     end
-    ##
-    # Outputs a message to the Logger with log level "Error"
-    # :args: msg, message to be written to log
     def error msg
       self.log.error msg
     end
-    ##
-    # Outputs a message to the Logger with log level "Info"
-    # :args: msg, message to be written to log
     def info msg
       self.log.info msg
     end
   end
 end
 
-# Run the server and finish bootstrapping
 
 # A nice little top-level logger.
 log = RubyCraft::Log.new($LOG_PREFIX, 
@@ -129,9 +88,9 @@ log = RubyCraft::Log.new($LOG_PREFIX,
 RubyCraft::Loader.new(log).init
 
 # Check if the Server class was properly loaded. Die if it isn't.
-if(defined?(RubyCraft::Server) == "constant")
+if(defined?(RubyCraft::Server) == "constant") then
   cfg = nil
-  if(defined?(RubyCraft::YAMLConfig) == "constant")
+  if(defined?(RubyCraft::YAMLConfig) == "constant") then
     log.debug "YAMLConfig module found. Using that."
     cfg = RubyCraft::YAMLConfig.new
   else
@@ -139,9 +98,9 @@ if(defined?(RubyCraft::Server) == "constant")
     cfg = RubyCraft::DefaultConfig.new
   end
   EventMachine::run do
-	s = RubyCraft::Server.new(log)
-	s.start
-end
+	  s = RubyCraft::Server.new(log)
+	  s.start
+  end
 else
   log.debug "Couldn't load server module. Exiting."
   exit

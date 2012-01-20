@@ -1,18 +1,10 @@
-# Base class for EVERYTHING.
-
-
 module RubyCraft
-  ##
-  # Core server class.
   class Server
 	  attr_accessor :version, :connections, :protocol, :log, :players, :worlds, :terrain_generator, :config
 	  @plugins
 	  @lib_path
 	  @plugin_path
 	  @cfg
-	  ##
-	  # Initializes the server.
-	  # :args: log, the given RubyCraft::Log object to be used for logging.
 	  def initialize log, cfg
 	    log.info "Loading Configuration with ConfigAdapter: #{cfg.class.to_s}"
 	    @cfg = cfg
